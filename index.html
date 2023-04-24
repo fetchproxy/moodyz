@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS</title>
+
+    <!-- Vue and VueRouter -->
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
+
+    <!-- TDesign -->
+    <link rel="stylesheet" href="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.css" />
+    <script src="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.js"></script>
+
+    <!-- TDesign-icons-vue-next -->
+    <link rel="stylesheet" href="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.css" />
+    <script src="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.js"></script>
+
+    <!-- app -->
+    <link rel="stylesheet" href="./assets/app.css" />
+</head>
+
+<body>
+    <app>
+        <router-view></router-view>
+    </app>
+
+    <templates>
+        <page id="page-logo">
+            <div class="flex">
+                <t-card style="width:80%;background-color: hsl(0,0%,40%);color:hsl(0, 0%, 90%)">
+                    <h2>MS</h2>
+                    <p>影音播放小程序</p>
+                    <t-divider></t-divider>
+                    <t-progress theme="plump" :percentage="progress" style="color:hsl(0, 0%, 90%)" />
+                </t-card>
+            </div>
+        </page>
+
+        <page id="page-main" style="background-color: hsl(0,0%,40%);color:hsl(0, 0%, 90%)">
+            <div style="display:grid;                
+                grid-template-rows:50px 1fr 50px;
+                height:100%;
+                width:100%;
+                max-width:412px;
+                background-color: hsl(0,0%,40%);
+                color:hsl(0, 0%, 90%);">
+
+                <header style="box-sizing: border-box;
+                padding:8px;
+                width:100%;    
+                max-width:412px;
+                display:grid;
+                grid-template-columns:calc(40% - 8px) calc(40% - 8px) 20%;
+                gap:8px;">
+                    <t-select v-model="site" :options="sites" :prefix-icon="siteIcon" style="width:100%"></t-select>
+                    <t-select v-model="path" :options="paths" :prefix-icon="pathIcon" style="width:100%"></t-select>
+                    <t-button variant="outline" :loading="loading" style="width:100%"></t-button>
+                </header>
+
+                <main style="box-sizing: border-box;
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                overflow-y:auto;
+                padding:8px;
+                width:100%;
+                max-width:412px;
+                gap:8px 8px;
+                background-color:hsl(0,0%,50%)">
+                    <div v-for="card in cards" style="
+                    background-color: whitesmoke;
+                    border-radius: 3px;
+                    width:100%;
+                    height:322px;">
+                        <img :src="card.img" style="width:100%;
+                        height:270px;
+                        border-radius: 3px 3px 0px 0px;" />
+                        <div style="display:grid;
+                        grid-template-columns: 1fr 1fr; 
+                        gap:10px;
+                        padding:8px;">
+                            <t-button variant="outline" :data-women="card['women-name']"
+                                onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
+                            <t-button variant="outline" :data-women="card.women"
+                                onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
+                        </div>
+                    </div>
+                </main>
+
+                <footer style="box-sizing: border-box;
+                padding:8px;
+                width:100%;
+                max-width:412px;
+                display:grid;
+                grid-template-columns:1fr 1fr 1fr 1fr;
+                gap:8px">
+                    <t-button variant="outline" style="width:100%">
+                        <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
+                    <t-button variant="outline" style="width:100%">第 {{page}} 页</t-button>
+                    <t-button variant="outline" onclick="vm.previous()" style="width:100%">
+                        <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
+                    <t-button variant="outline" onclick="vm.next()" style="width:100%">
+                        <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
+                </footer>
+            </div>
+        </page>
+
+        <page id="page-play">
+            <div style="display:grid;
+            box-sizing: border-box;
+            grid-template-rows:50px 100px 300px 1fr;
+            padding:8px;
+            height: 100%;
+            width:100%;
+            max-width:412px;
+            background-color:darkgrey">
+                <div style="display:grid;
+                grid-template-columns:1fr 1fr;
+                width:100%;">
+                    <div class="flex">
+                        <span>编号 {{play}}</span>
+                    </div>
+                    <div class="flex">
+                        <span>女优 {{women}}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <p style="padding:8px;margin:0px;">{{title}}</p>
+                </div>
+
+                <div>
+                    <img :src="img" style="width:100%;border-radius: 3px;" />
+                </div>
+
+                <div>
+                    <video controls preload="metadata" :src="video" style="width:100%;"></video>
+                </div>
+            </div>
+        </page>
+
+        <page id="page-playall"></page>
+    </templates>
+
+    <script src="./assets/tools.js"></script>
+    <script src="./assets/app.js"></script>
+</body>
+
+</html>

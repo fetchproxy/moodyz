@@ -101,7 +101,7 @@ const app = Vue.reactive({
   site: "https://moodyz.com",
   // 全部站点选项
   sites: [
-    { label: "Moodyz", value: "https://moodyz.com" },
+    { label: "MOODYZ", value: "https://moodyz.com" },
     { label: "S-One", value: "https://s1s1s1.com" },
   ],
   // 当前路径
@@ -304,12 +304,22 @@ const vm = Vue.createApp({
       await vm.get();
     },
     site: async () => {
-      vm.page = 1;
-      await vm.get();
+      if (vm.path == "/top") {
+        if (vm.page == 1) {
+          await vm.get();
+        } else {
+          vm.page = 1;
+        }
+      } else {
+        vm.path = "/top";
+      }
     },
     path: async () => {
-      vm.page = 1;
-      await vm.get();
+      if (vm.page == 1) {
+        await vm.get();
+      } else {
+        vm.page = 1;
+      }
     },
   },
 })

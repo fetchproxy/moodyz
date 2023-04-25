@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-unused-vars
 const getCards = async (url = "") => {
   const cards = [];
   if (app.caches[url]) {
@@ -44,18 +43,6 @@ const getCards = async (url = "") => {
   });
 };
 
-const getPlay = async (url = "") => {
-  const dom = DOM(
-    await getHTML(url, true, 20),
-  );
-  const video = $("video", dom);
-  if (video == undefined) {
-    return;
-  }
-  const img = $("img.swiper-lazy", dom);
-  app.play = { video: video.src, img: img.dataset.src };
-};
-
 const pageLogo = {
   data() {
     return app;
@@ -70,8 +57,6 @@ const pageLogo = {
 const pageMain = {
   data() {
     return app;
-  },
-  async beforeMount() {
   },
   template: "#page-main",
 };
@@ -298,7 +283,6 @@ const vm = Vue.createApp({
       imgLists.forEach((img) => {
         this.imgs.push(img.dataset.src);
       });
-      this.img = this.imgs[0];
 
       const title = $("h2.p-workPage__title", dom);
       this.title = title.textContent;

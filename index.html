@@ -32,8 +32,8 @@
         <page id="page-logo">
             <div class="flex">
                 <t-card style="width:80%;background-color: hsl(0,0%,40%);color:hsl(0, 0%, 90%)">
-                    <h2>MS</h2>
-                    <p>影音播放小程序</p>
+                    <h2>影音播放小程序</h2>
+                    <p>Moodyz、S-One 极简版</p>
                     <t-divider></t-divider>
                     <t-progress theme="plump" :percentage="progress" style="color:hsl(0, 0%, 90%)" />
                 </t-card>
@@ -109,6 +109,30 @@
         </page>
 
         <page id="page-play">
+            <div style="padding:8px;">
+                <t-card :title="play" :subtitle="women" header-bordered style="height:100%;">
+                    <p style="font-weight:bold;">{{title}}</p>
+                    <img :src="img" style="width:100%;
+                    border-radius: 3px;
+                    height:233px;
+                    background-color:darkgray" />
+                    <t-space style="width:100%">
+                        <t-button variant="outline" style="width:100%;">下 载</t-button>
+                        <t-button variant="outline">放大镜</t-button>
+                        <t-button variant="outline">上一张</t-button>
+                        <t-button variant="outline">下一张</t-button>
+                    </t-space>
+                    <t-divider style="margin:16px 0px;"></t-divider>
+                    <video controls preload="metadata" :src="video" style="width:100%;"></video>
+                    <t-space style="width:100%">
+                        <t-button variant="outline" style="width:100%;">下载</t-button>
+                        <t-button variant="outline" style="width:100%;">暂停</t-button>
+                    </t-space>
+                </t-card>
+            </div>
+        </page>
+
+        <page id="page-playall">
             <div style="display:grid;
             box-sizing: border-box;
             grid-template-rows:50px 100px 300px 1fr;
@@ -141,8 +165,6 @@
                 </div>
             </div>
         </page>
-
-        <page id="page-playall"></page>
     </templates>
 
     <script src="./assets/tools.js"></script>

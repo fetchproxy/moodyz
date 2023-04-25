@@ -86,7 +86,7 @@ const pagePlay = {
   beforeUnmount() {
     app.women = "";
     app.title = "";
-    app.img = "";
+    app.imgs = [];
     app.video = "";
   },
   template: "#page-play",
@@ -161,7 +161,7 @@ const app = Vue.reactive({
   title: "",
   desc: "",
   video: "",
-  img: "",
+  imgs: [],
   // 全部播放IDs
   playall: [],
   // 系统缓存
@@ -189,6 +189,14 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
+    mPlay() {
+      const video = $("video");
+      if (video) video.play();
+    },
+    pause() {
+      const video = $("video");
+      if (video) video.pause();
+    },
     previous() {
       if (vm.page > 1) {
         vm.page--;
@@ -285,8 +293,12 @@ const vm = Vue.createApp({
       const dom = DOM(
         await getHTML(url, true, 20),
       );
-      const img = $("img.swiper-lazy", dom);
-      this.img = img.dataset.src;
+      const imgLists = $$("img.swiper-lazy", dom);
+      this.imgs = [];
+      imgLists.forEach((img) => {
+        this.imgs.push(img.dataset.src);
+      });
+      this.img = this.imgs[0];
 
       const title = $("h2.p-workPage__title", dom);
       this.title = title.textContent;
@@ -303,9 +315,11 @@ const vm = Vue.createApp({
       await vm.get();
     },
     site: async () => {
+      vm.page = 1;
       await vm.get();
     },
     path: async () => {
+      vm.page = 1;
       await vm.get();
     },
   },

@@ -112,22 +112,21 @@
             <div style="padding:8px;">
                 <t-card :title="play" :subtitle="women" header-bordered style="height:100%;">
                     <p style="font-weight:bold;">{{title}}</p>
-                    <img :src="img" style="width:100%;
-                    border-radius: 3px;
-                    height:233px;
-                    background-color:darkgray" />
-                    <t-space style="width:100%">
-                        <t-button variant="outline" style="width:100%;">下 载</t-button>
-                        <t-button variant="outline">放大镜</t-button>
-                        <t-button variant="outline">上一张</t-button>
-                        <t-button variant="outline">下一张</t-button>
-                    </t-space>
+                    <t-swiper :duration="300" :interval="3000" :navigation="{size:'large'}">
+                        <t-swiper-item v-for="img in imgs" :key="img">
+                            <t-image :src="img" fit="contain" style="width:100%;height:233px;" />
+                        </t-swiper-item>
+                    </t-swiper>
                     <t-divider style="margin:16px 0px;"></t-divider>
                     <video controls preload="metadata" :src="video" style="width:100%;"></video>
-                    <t-space style="width:100%">
-                        <t-button variant="outline" style="width:100%;">下载</t-button>
-                        <t-button variant="outline" style="width:100%;">暂停</t-button>
-                    </t-space>
+                    <div style="display:grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    gap:8px;
+                    width:100%">
+                        <t-button variant="outline">下载</t-button>
+                        <t-button variant="outline" onclick="vm.mPlay()">播放</t-button>
+                        <t-button variant="outline" onclick="vm.pause()">暂停</t-button>
+                    </div>
                 </t-card>
             </div>
         </page>

@@ -112,7 +112,7 @@
             <div style="padding:8px;">
                 <t-card :title="play" :subtitle="women" header-bordered style="height:100%;">
                     <p style="font-weight:bold;">{{title}}</p>
-                    <t-swiper :duration="300" :interval="3000" :navigation="{size:'large'}">
+                    <t-swiper :duration="300" :interval="3000" :navigation="{size:'large'}" style="height:233px;">
                         <t-swiper-item v-for="img in imgs" :key="img">
                             <t-image :src="img" fit="contain" style="width:100%;height:233px;" />
                         </t-swiper-item>

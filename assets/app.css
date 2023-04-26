@@ -14,7 +14,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* position: relative; */
     background-color: hsl(0, 0%, 20%);
     overflow: hidden;
 }
@@ -22,6 +21,7 @@ body {
 app {
     height: 100%;
     width: 100%;
+    position: relative;
     max-width: var(--max-width);
     background-color: hsl(0, 0%, 30%);
 

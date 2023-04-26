@@ -44,31 +44,28 @@
             <div style="display:grid;                
                 grid-template-rows:50px 1fr 50px;
                 height:100%;
-                width:100%;
-                max-width:min(100vw,var(--max-width));
+                width:min(100vw,500px);
                 background-color: hsl(0,0%,40%);
                 color:hsl(0, 0%, 90%);">
 
                 <header style="box-sizing: border-box;
-                padding:8px;
-                width:100%;
-                max-width:min(100vw,var(--max-width));
-                display:grid;
-                grid-template-columns:38% calc(52% - 16px) 10%;
-                gap:8px;">
+                padding: 8px;
+                width: min(100vw,500px);
+                display: grid;
+                grid-template-columns: 38% calc(52% - 16px) 10%;
+                gap: 8px;">
                     <t-select v-model="site" :options="sites" :prefix-icon="siteIcon" style="width:100%"></t-select>
                     <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
                     <t-button variant="outline" :loading="loading" style="width:100%"></t-button>
                 </header>
 
                 <main style="box-sizing: border-box;
-                display:grid;
+                display: grid;
                 grid-template-columns: 1fr 1fr;
-                overflow-y:auto;
-                padding:8px;
-                width:100%;
-                max-width:min(100vw,var(--max-width));
-                gap:8px 8px;
+                overflow-y: auto;
+                padding: 8px;
+                width: min(100vw,500px);
+                gap: 8px 8px;
                 background-color:hsl(0,0%,50%)">
                     <div v-for="card in cards" style="
                     background-color: whitesmoke;
@@ -92,10 +89,9 @@
 
                 <footer style="box-sizing: border-box;
                 padding:8px;
-                width:100%;
-                max-width:min(100vw,var(--max-width));
+                width:min(100vw,500px);
                 display:grid;
-                grid-template-columns:repeat(4, 1fr);
+                grid-template-columns:repeat(4,1fr);
                 gap:8px">
                     <t-button variant="outline" style="width:100%;font-size:12px;">
                         <template #icon><t-icon name="play-circle" /></template>播放 </t-button>

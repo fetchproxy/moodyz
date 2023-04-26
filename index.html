@@ -44,15 +44,13 @@
             <div style="display:grid;                
                 grid-template-rows:50px 1fr 50px;
                 height:100%;
-                width:100%;
-                max-width: min(100vw,500px);
+                width: min(100vw,var(--max-width));
                 background-color: hsl(0,0%,40%);
                 color:hsl(0, 0%, 90%);">
 
                 <header style="box-sizing: border-box;
                 padding: 8px;
-                width:100%;
-                max-width: min(100vw,500px);
+                width: min(100vw,var(--max-width));
                 display: grid;
                 grid-template-columns: 38% calc(52% - 16px) 10%;
                 gap: 8px;">
@@ -66,8 +64,7 @@
                 grid-template-columns: 1fr 1fr;
                 overflow-y: auto;
                 padding: 8px;
-                width:100%;
-                max-width: min(100vw,500px);
+                width: min(100vw,var(--max-width));
                 gap: 8px 8px;
                 background-color:hsl(0,0%,50%)">
                     <div v-for="card in cards" style="
@@ -92,8 +89,7 @@
 
                 <footer style="box-sizing: border-box;
                 padding:8px;
-                width:100%;
-                max-width: min(100vw,500px);
+                width: min(100vw,var(--max-width));
                 display:grid;
                 grid-template-columns:repeat(4,1fr);
                 gap:8px">

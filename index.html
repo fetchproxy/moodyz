@@ -21,6 +21,37 @@
 
     <!-- app -->
     <link rel="stylesheet" href="./assets/app.css" />
+
+    <style>
+        .header {
+            box-sizing: border-box;
+            padding: 8px;
+            width: min(100vw, var(--max-width));
+            display: grid;
+            grid-template-columns: 38% calc(52% - 16px) 10%;
+            gap: 8px;
+        }
+
+        .main {
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow-y: auto;
+            padding: 8px;
+            width: min(100vw, var(--max-width));
+            gap: 8px 8px;
+            background-color: hsl(0, 0%, 50%)
+        }
+
+        .footer {
+            box-sizing: border-box;
+            padding: 8px;
+            width: min(100vw, var(--max-width));
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px
+        }
+    </style>
 </head>
 
 <body>
@@ -31,7 +62,9 @@
     <templates>
         <page id="page-logo">
             <div class="flex">
-                <t-card style="width:80%;background-color: hsl(0,0%,40%);color:hsl(0, 0%, 90%)">
+                <t-card style="width:80%;
+                background-color: hsl(0,0%,40%);
+                color:hsl(0, 0%, 90%)">
                     <h2>影 音 播 放 小 程 序</h2>
                     <p>Moodyz、S-One 极简版</p>
                     <t-divider></t-divider>
@@ -44,29 +77,17 @@
             <div style="display:grid;                
                 grid-template-rows:50px 1fr 50px;
                 height:100%;
-                width: min(100vw,var(--max-width));
+                width: min(100vw, var(--max-width));
                 background-color: hsl(0,0%,40%);
                 color:hsl(0, 0%, 90%);">
 
-                <header style="box-sizing: border-box;
-                padding: 8px;
-                width: min(100vw,var(--max-width));
-                display: grid;
-                grid-template-columns: 38% calc(52% - 16px) 10%;
-                gap: 8px;">
+                <header class="header">
                     <t-select v-model="site" :options="sites" :prefix-icon="siteIcon" style="width:100%"></t-select>
                     <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
                     <t-button variant="outline" :loading="loading" style="width:100%"></t-button>
                 </header>
 
-                <main style="box-sizing: border-box;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                overflow-y: auto;
-                padding: 8px;
-                width: min(100vw,var(--max-width));
-                gap: 8px 8px;
-                background-color:hsl(0,0%,50%)">
+                <main class="main">
                     <div v-for="card in cards" style="
                     background-color: whitesmoke;
                     border-radius: 3px;
@@ -87,12 +108,7 @@
                     </div>
                 </main>
 
-                <footer style="box-sizing: border-box;
-                padding:8px;
-                width: min(100vw,var(--max-width));
-                display:grid;
-                grid-template-columns:repeat(4,1fr);
-                gap:8px">
+                <footer class="footer">
                     <t-button variant="outline" style="width:100%;font-size:12px;">
                         <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
                     <t-button variant="outline" style="width:100%;font-size:12px;">第 {{page}} 页</t-button>

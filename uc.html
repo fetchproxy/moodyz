@@ -125,16 +125,19 @@
 
         <page id="page-play">
             <div style="padding:8px;">
-                <t-card :title="play" :subtitle="women" header-bordered style="height:100%;">
-<!--                     <p style="font-weight:bold;">{{title}}</p> -->
-                    <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" style="height:233px;">
+                <t-card :title="play" :subtitle="women" header-bordered style="height:100%;
+                    display:flex;
+                    flex-direction: column;">
+                    <!-- <p style="font-weight:bold;">{{title}}</p> -->
+                    <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" style="flex:1;">
                         <t-swiper-item v-for="img in imgs" :key="img">
-                            <t-image :src="img" fit="contain" style="width:100%;height:233px;" />
+                            <t-image :src="img" fit="contain" style="width:100%;height:40vh" />
                         </t-swiper-item>
                     </t-swiper>
-                    <t-divider style="margin:16px 0px;"></t-divider>
-                    <video controls preload="metadata" :src="video" style="width:100%;"></video>
+                    <t-divider style="margin:16px 0px;flex:0"></t-divider>
+                    <video controls preload="metadata" :src="video" style="width:100%;flex:0"></video>
                     <div style="margin:8px 0 0 0;
+                    flex:0;
                     display:grid;
                     grid-template-columns: 1fr 1fr 1fr;
                     gap:8px;

@@ -179,6 +179,14 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
+    showPics() {
+      const ele = $("dialog.showpics");
+      ele.open = true;
+    },
+    closeShowPics() {
+      const ele = $("dialog.showpics");
+      ele.open = false;
+    },
     mPlay() {
       const video = $("video");
       if (video) video.play();

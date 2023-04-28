@@ -64,12 +64,14 @@
             max-width: 412px;
         }
 
-        .showpic {
+        dialog {
             background-color: hsl(0, 0%, 30%);
-            padding: 4px;
-            height: calc(100% - 14px);
-            width: calc(100% - 14px);
+            border-width: 0px;
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
             z-index: 50;
+            padding: 4px;
         }
     </style>
 </head>
@@ -86,9 +88,8 @@
                 background-color: hsl(0,0%,40%);
                 color:hsl(0, 0%, 90%)">
                     <h2>影 音 播 放 小 程 序</h2>
-                    <p>Moodyz、S-One 极简版</p>
                     <t-divider></t-divider>
-                    <t-progress theme="plump" :percentage="progress" style="color:hsl(0, 0%, 90%)" />
+                    <p>Moodyz、S-One 极简版</p>
                 </t-card>
             </div>
         </page>
@@ -136,7 +137,7 @@
                     <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
                         <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
                 </footer>
-                <dialog class="showpic">
+                <dialog name="showPic" class="showpic">
                     <div style="display:flex;
                         flex-direction: column;
                         gap:8px;
@@ -144,73 +145,52 @@
                         width:100%;">
                         <div style="flex:1 1 auto;
                             overflow: scroll;
-                            object-fit: none;">
-                            <img :src="showImg" style="width:100%;" onclick="vm.closeShowPic()" />
+                            object-fit: cover;
+                            position: relative;">
+                            <img :src="showImg" style="position:absolute; width:100%;" onclick="vm.closeShowPic()" />
                         </div>
                         <div style="flex:0 0 30px;
                             display:flex;
                             align-items: center;
                             justify-content: center;">
-                            <input type="range" min="1" max="2" step="0.1" value="1" style="width:calc(100% - 12px);"
-                                onchange="vm.scaleImg(this.value)" />
+                            <input type="range" min="100" max="200" step="10" value="100"
+                                style="width:calc(100% - 12px);" onchange="vm.scaleImg(this.value)" />
                         </div>
                     </div>
                 </dialog>
-            </div>
-        </page>
 
-        <page id="page-showPic">
-            <div class="showpic">
-                <div style="display:flex;
-                flex-direction: column;
-                gap:8px;
-                height:100%;
-                width:100%;">
-                    <div style="flex:1 1 auto;
-                    overflow: scroll;
-                    object-fit: none;">
-                        <img :src="showImg" style="width:100%;" onclick="vm.$router.goto('/main')" />
+                <dialog name="play">
+                    <div style="padding:8px;height:calc(100% - 16px);">
+                        <t-card :title="play" :subtitle="women" header-bordered style="height:100%;
+                            display:flex;
+                            flex-direction: column;">
+                            <template #actions>
+                                <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlay()">
+                                    <template #icon><t-icon name="close" /></template>
+                                </t-button>
+                            </template>
+                            <!-- <p style="font-weight:bold;">{{title}}</p> -->
+                            <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" style="flex:1 1;">
+                                <t-swiper-item v-for="img in imgs" :key="img">
+                                    <t-image :src="img" fit="contain" style="width:100%;height:40vh" />
+                                </t-swiper-item>
+                            </t-swiper>
+                            <t-divider style="margin:16px 0px;flex:0 0"></t-divider>
+                            <video controls preload="metadata" :src="video" style="width:100%;flex:0 0"></video>
+                            <div style="margin:8px 0 0 0;
+                            flex:0 0;
+                            display:grid;
+                            grid-template-columns: 1fr 1fr 1fr;
+                            gap:8px;
+                            width:100%">
+                                <t-button variant="outline" style="font-size:12px;">下 载</t-button>
+                                <t-button variant="outline" style="font-size:12px;" onclick="vm.mPlay()">播 放</t-button>
+                                <t-button variant="outline" style="font-size:12px;" onclick="vm.pause()">暂 停</t-button>
+                            </div>
+                        </t-card>
                     </div>
-                    <div style="flex:0 0 30px;
-                    display:flex;
-                    align-items: center;
-                    justify-content: center;">
-                        <input type="range" min="1" max="2" step="0.1" value="1" style="width:calc(100% - 8px);"
-                            onchange="vm.scaleImg(this.value)" />
-                    </div>
-                </div>
+                </dialog>
             </div>
-        </page>
-
-        <page id="page-play">
-            <div style="padding:8px;height:calc(100% - 16px);">
-                <t-card :title="play" :subtitle="women" header-bordered style="height:100%;
-                    display:flex;
-                    flex-direction: column;">
-                    <!-- <p style="font-weight:bold;">{{title}}</p> -->
-                    <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" style="flex:1 1;">
-                        <t-swiper-item v-for="img in imgs" :key="img">
-                            <t-image :src="img" fit="contain" style="width:100%;height:40vh" />
-                        </t-swiper-item>
-                    </t-swiper>
-                    <t-divider style="margin:16px 0px;flex:0 0"></t-divider>
-                    <video controls preload="metadata" :src="video" style="width:100%;flex:0 0"></video>
-                    <div style="margin:8px 0 0 0;
-                    flex:0 0;
-                    display:grid;
-                    grid-template-columns: 1fr 1fr 1fr;
-                    gap:8px;
-                    width:100%">
-                        <t-button variant="outline" style="font-size:12px;">下 载</t-button>
-                        <t-button variant="outline" style="font-size:12px;" onclick="vm.mPlay()">播 放</t-button>
-                        <t-button variant="outline" style="font-size:12px;" onclick="vm.pause()">暂 停</t-button>
-                    </div>
-                </t-card>
-            </div>
-        </page>
-
-        <page id="page-playall">
-
         </page>
     </templates>
 

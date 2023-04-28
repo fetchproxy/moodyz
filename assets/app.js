@@ -179,8 +179,10 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
-    showPics() {
+    showPic(url = "") {
       const ele = $("dialog.showpics");
+      const img = $("img", ele);
+      img.src = url;
       ele.open = true;
     },
     closeShowPics() {

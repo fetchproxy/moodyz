@@ -189,7 +189,8 @@ const vm = Vue.createApp({
   },
   methods: {
     scaleImg(value = 1) {
-      const img = $("img");
+      const ele = $("dialog");
+      const img = $("img", ele);
       img.style.transform = `translate(${img.width * value - img.width}px, ${
         img.height * value - img.height
       }px) scale(${value})`;
@@ -200,7 +201,18 @@ const vm = Vue.createApp({
     },
     showPic(url = "") {
       vm.showImg = url;
-      vm.$router.push("/showpic");
+      const ele = $("dialog");
+      ele.open = true;
+      // vm.$router.push("/showpic");
+    },
+    closeShowPic() {
+      const ele = $("dialog");
+      const range = $("input", ele);
+      const img = $("img", ele);
+      img.style.transform = "translate(0,0) scale(1)";
+      vm.showImg = "";
+      range.value = 1;
+      ele.open = false;
     },
     mPlay() {
       const video = $("video");

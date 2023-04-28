@@ -65,6 +65,7 @@
         }
 
         .showpics {
+            background-color: hsl(0, 0%, 30%);
             position: absolute;
             top: 0px;
             left: 0px;
@@ -119,8 +120,7 @@
                     border-radius: 3px;
                     width:100%;">
                         <img :index="index" :src="card.img" style="width:100%;
-                        /* height:calc((width - 24px)/2*1.4); */
-                        border-radius: 3px 3px 0px 0px;" />
+                        border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.src)" />
                         <div style="display:grid;
                         grid-template-columns: 40% 1fr; 
                         gap:10px;
@@ -142,20 +142,14 @@
                     <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
                         <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
                 </footer>
-                <dialog class="showpics" ref="showpics">
-                    <div style="display:flex;margin-bottom:10px;">
-                        <div style="flex:1 1;text-align: center;display:inline-block">看图</div>
+                <dialog class="showpics">
+                    <div style="display:flex;margin-bottom:10px;color:whitesmoke">
+                        <div style="flex:1 1;text-align: center;display:inline-block">看 大 图</div>
                         <t-button shape="circle" variant="text" onclick="vm.closeShowPics()">
                             <template #icon><t-icon name="close" /></template>
-                            <!-- <close-icon /> -->
                         </t-button>
                     </div>
-                    <t-swiper :duration="300" :autoplay="false" :loop="false" :stopOnHover="false"
-                        :navigation="{size:'large'}" style="height:90%">
-                        <t-swiper-item v-for="card in cards">
-                            <t-image :src="card.img" fit="contain" />
-                        </t-swiper-item>
-                    </t-swiper>
+                    <img style="width:100%;" />
                 </dialog>
             </div>
         </page>

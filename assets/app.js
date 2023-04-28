@@ -179,14 +179,28 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
+    scaleImg(value = 1) {
+      const ele = $("dialog.showpics");
+      const img = $("img", ele);
+      img.style.transform = `translate(${img.width * value - img.width}px, ${
+        img.height * value - img.height
+      }px) scale(${value})`;
+      img.parentElement.scroll(
+        `${img.width * value - img.width}`,
+        `${img.height * value - img.height}`,
+      );
+    },
     showPic(url = "") {
       const ele = $("dialog.showpics");
       const img = $("img", ele);
+      img.style.transform = `scale(1)`;
       img.src = url;
       ele.open = true;
     },
-    closeShowPics() {
+    closeShowPic() {
       const ele = $("dialog.showpics");
+      const range = $("input", ele);
+      range.value = 1;
       ele.open = false;
     },
     mPlay() {

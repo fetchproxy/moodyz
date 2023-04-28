@@ -1,362 +1,201 @@
-const getCards = async (url = "") => {
-  const cards = [];
-  if (app.caches[url]) {
-    app.cards = app.caches[url];
-    return;
-  }
-  const dom = DOM(
-    await getHTML(url, true, 20),
-  );
-  const lists = $$("div.c-card", dom);
-  const length = lists.length;
-  let index = 1;
-  lists.forEach((card) => {
-    app.progress = index / length * 100;
-    index++;
-    const a = $("a.img.hover", card);
-    const strs = a.href.split("/");
-    const idStr = strs[strs.length - 1].split("?");
-    const id = idStr[0];
-    const img = $("img", card);
-    const title = $("p.text", card);
-    let women = card.children[1];
-    let womenID = "";
-    if (women != undefined) {
-      if (women.href != undefined) {
-        womenID = women.href.split("/");
-        womenID = womenID[womenID.length - 1];
-      }
-    } else {
-      women = Vue.h("a", { href: "" }, "");
-    }
+<!DOCTYPE html>
+<html lang="zh-Hans">
 
-    cards.push({
-      "id": id,
-      "url": `#/play/${id}`,
-      "img": img.dataset.src,
-      "title": title.textContent,
-      "women": womenID || "",
-      "women-name": women.textContent || "",
-    });
-    app.caches[url] = cards;
-    app.cards = cards;
-  });
-};
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS</title>
 
-const pageLogo = {
-  data() {
-    return app;
-  },
-  async mounted() {
-    await vm.get();
-    vm.$router.push("/main");
-  },
-  template: "#page-logo",
-};
+    <!-- Vue and VueRouter -->
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
 
-const pageMain = {
-  data() {
-    return app;
-  },
-  template: "#page-main",
-};
+    <!-- TDesign -->
+    <link rel="stylesheet" href="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.css" />
+    <script src="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.js"></script>
 
-const routes = [
-  { path: "", component: pageLogo },
-  // { path: "", component: pageMain },
-  { path: "/main", component: pageMain },
-];
+    <!-- TDesign-icons-vue-next -->
+    <link rel="stylesheet" href="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.css" />
+    <script src="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.js"></script>
 
-const router = VueRouter.createRouter({
-  history: VueRouter.createWebHashHistory(),
-  routes,
-});
+    <!-- app -->
+    <link rel="stylesheet" href="./assets/app.css" />
 
-const app = Vue.reactive({
-  // 当前站点
-  site: "https://moodyz.com",
-  // 全部站点选项
-  sites: [
-    { label: "MOODYZ", value: "https://moodyz.com" },
-    { label: "S-One", value: "https://s1s1s1.com" },
-  ],
-  // 当前路径
-  path: "/top",
-  // 所有路径选项
-  paths: [
-    { label: "最新", value: "/top" },
-    { label: "巨乳", value: "/works/list/genre/215" },
-    { label: "中出", value: "/works/list/genre/128" },
-    { label: "美少女", value: "/works/list/genre/330" },
-    { label: "痴女", value: "/works/list/genre/218" },
-    { label: "口交", value: "/works/list/genre/113" },
-    { label: "苗条", value: "/works/list/genre/214" },
-    { label: "单体作品", value: "/works/list/genre/408" },
-    { label: "尖晶石", value: "/works/list/genre/126" },
-    { label: "最佳总集", value: "/works/list/genre/5009" },
-    { label: "3P、4P", value: "/works/list/genre/421" },
-    { label: "潮吹", value: "/works/list/genre/114" },
-    { label: "女子校生", value: "/works/list/genre/202" },
-
-    { label: "强暴", value: "/works/list/genre/101" },
-    { label: "乱交", value: "/works/list/genre/104" },
-    { label: "放尿", value: "/works/list/genre/115" },
-    { label: "女教师", value: "/works/list/genre/367" },
-    { label: "秘书", value: "/works/list/genre/372" },
-    { label: "人妻", value: "/works/list/genre/205" },
-    { label: "风俗娘", value: "/works/list/genre/324" },
-    { label: "颜射", value: "/works/list/genre/329" },
-    { label: "轮奸", value: "/works/list/genre/334" },
-    { label: "制服", value: "/works/list/genre/336" },
-    { label: "美乳", value: "/works/list/genre/340" },
-    { label: "OL", value: "/works/list/genre/356" },
-    { label: "长身", value: "/works/list/genre/384" },
-    { label: "淫乱", value: "/works/list/genre/411" },
-    { label: "泥醉", value: "/works/list/genre/454" },
-    { label: "紧缚", value: "/works/list/genre/5025" },
-    { label: "偶像艺人", value: "/works/list/genre/5028" },
-    { label: "强奸", value: "/works/list/genre/5033" },
-    { label: "偷拍", value: "/works/list/genre/5035" },
-    { label: "女搜查官", value: "/works/list/genre/5037" },
-  ],
-  // 当前页
-  page: 1,
-  // 当前播放ID
-  play: "",
-  women: "",
-  title: "",
-  desc: "",
-  video: "",
-  showImg: "",
-  imgs: [],
-  // 全部播放IDs
-  playall: [],
-  // 系统缓存
-  caches: {},
-  //
-  loading: false,
-
-  // t-select site left icon
-  siteIcon: Vue.h(
-    "svg",
-    { class: "t-icon t-icon-home", style: "font-size:20px" },
-    Vue.h("use", { href: "#t-icon-home" }),
-  ),
-  // t-select path left icon
-  pathIcon: Vue.h(
-    "svg",
-    { class: "t-icon t-icon-gender-female", style: "font-size:20px" },
-    Vue.h("use", { href: "#t-icon-gender-female" }),
-  ),
-});
-
-const vm = Vue.createApp({
-  data() {
-    return app;
-  },
-  methods: {
-    //打开对话框
-    openDialog(name = "") {
-      const dialog = $(`dialog[name='${name}']`);
-      dialog.open = true;
-    },
-    //关闭对话框
-    closeDialog(name = "") {
-      const dialog = $(`dialog[name='${name}']`);
-      dialog.open = false;
-    },
-    //缩放图片
-    scaleImg(value = 1) {
-      const ele = $("dialog");
-      const img = $("img", ele);
-      img.style.width = `${value}%`;
-      img.style.height = `${img.width * 1.4}px`;
-    },
-    //显示
-    showPic(url = "") {
-      window.history.pushState(null, null);
-      // deno-lint-ignore no-window-prefix
-      window.addEventListener("popstate", this.closeShowPic(), true);
-      vm.showImg = url;
-      this.openDialog("showPic");
-      // vm.$router.push("/showpic");
-    },
-
-    closeShowPic() {
-      this.closeDialog("showPic");
-      const ele = $("dialog[name='showPic']");
-      const range = $("input", ele);
-      const img = $("img", ele);
-      img.style.width = "100%";
-      // img.style.height = `${img.width * 1.4}px`;
-      img.style.height = "auto";
-      vm.showImg = "";
-      range.value = 100;
-    },
-
-    mPlay() {
-      const video = $("video");
-      if (video) video.play();
-    },
-
-    pause() {
-      const video = $("video");
-      if (video) video.pause();
-    },
-
-    previous() {
-      if (vm.page > 1) {
-        vm.page--;
-      }
-    },
-
-    next() {
-      if (vm.path == "/top") return;
-      vm.page++;
-    },
-
-    URL() {
-      if (app.path == "/top") {
-        return `${app.site}${app.path}`;
-      }
-      return `${app.site}${app.path}?page=${app.page}`;
-    },
-
-    closePlay() {
-      this.closeDialog("play");
-      app.women = "";
-      app.title = "";
-      app.imgs = [];
-      app.video = "";
-    },
-
-    async setPlay(id, women) {
-      app.women = women;
-      if (id) {
-        app.play = id;
-        // vm.$router.push("/play");
-        window.history.pushState(null, null);
-        // deno-lint-ignore no-window-prefix
-        window.addEventListener("popstate", this.closePlay(), true);
-        this.openDialog("play");
-        await vm.getPlay(`${app.site}/works/detail/${app.play}`);
-      }
-    },
-
-    setWomen(womenID = "", womenName = "") {
-      if (womenID == "") return;
-      const value = `/actress/detail/${womenID}`;
-      let have = false;
-      app.paths.forEach((path) => {
-        if (path.value == value) have = true;
-      });
-      if (!have) {
-        app.paths.push({ label: womenName, value: value });
-      }
-      app.women = womenName;
-      app.path = value;
-    },
-
-    async getWomen(url = "") {
-      const cards = [];
-      if (app.caches[url]) {
-        app.cards = app.caches[url];
-        return;
-      }
-      const dom = DOM(
-        await getHTML(url, true, 20),
-      );
-      const lists = $$("div.swiper-slide.c-low--6>a.item", dom);
-      lists.forEach((card) => {
-        const strs = card.href.split("/");
-        const idStr = strs[strs.length - 1].split("?");
-        const id = idStr[0];
-        const img = $("img", card);
-        const title = $("p.text", card);
-        let women = card.children[1];
-        let womenID = "";
-        if (women != undefined) {
-          if (women.href != undefined) {
-            womenID = women.href.split("/");
-            womenID = womenID[womenID.length - 1];
-          }
-        } else {
-          women = Vue.h("a", { href: "" }, "");
+    <style>
+        .header {
+            box-sizing: border-box;
+            padding: 8px;
+            display: grid;
+            grid-template-columns: 38% calc(52% - 16px) 10%;
+            gap: 8px;
+            /* other */
+            width: min(100vw, var(--max-width));
+            /* uc */
+            /* width: 100%;
+            max-width: 412px; */
         }
 
-        cards.push({
-          "id": id,
-          "url": `#/play/${id}`,
-          "img": img.dataset.src,
-          "title": title.textContent,
-          "women": womenID || "",
-          "women-name": women.textContent || app.women,
-        });
-        app.caches[url] = cards;
-        app.cards = cards;
-      });
-    },
-    async get() {
-      const main = $("app main");
-      if (main) {
-        main.style.filter = "blur(3px)";
-      }
-      vm.loading = true;
-      if (vm.path.startsWith("/actress/detail")) {
-        await this.getWomen(this.URL());
-      } else {
-        await getCards(this.URL());
-      }
-      vm.loading = false;
-      if (main) {
-        main.style.filter = "";
-        main.scroll(0, 0);
-      }
-    },
-    async getPlay(url = "") {
-      const dom = DOM(
-        await getHTML(url, true, 20),
-      );
-      const imgLists = $$("img.swiper-lazy", dom);
-      this.imgs = [];
-      imgLists.forEach((img) => {
-        this.imgs.push(img.dataset.src);
-      });
-
-      const title = $("h2.p-workPage__title", dom);
-      this.title = title.textContent;
-
-      const video = $("video", dom);
-      if (video == undefined) {
-        return;
-      }
-      this.video = video.src;
-    },
-  },
-  watch: {
-    page: async () => {
-      await vm.get();
-    },
-    site: async () => {
-      if (vm.path == "/top") {
-        if (vm.page == 1) {
-          await vm.get();
-        } else {
-          vm.page = 1;
+        .main {
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow-y: auto;
+            padding: 8px;
+            gap: 8px 8px;
+            background-color: hsl(0, 0%, 50%);
+            /* other */
+            width: min(100vw, var(--max-width));
+            /* uc */
+            /* width: 100%;
+            max-width: 412px; */
         }
-      } else {
-        vm.path = "/top";
-      }
-    },
-    path: async () => {
-      if (vm.page == 1) {
-        await vm.get();
-      } else {
-        vm.page = 1;
-      }
-    },
-  },
-})
-  .use(router)
-  .use(TDesign)
-  .mount("app");
+
+        .footer {
+            box-sizing: border-box;
+            padding: 8px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            /* other */
+            width: min(100vw, var(--max-width));
+            /* uc */
+            /* width: 100%;
+            max-width: 412px; */
+        }
+
+        dialog {
+            background-color: hsl(0, 0%, 30%);
+            border-width: 0px;
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            z-index: 50;
+            padding: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <app>
+        <router-view></router-view>
+    </app>
+
+    <templates>
+        <page id="page-logo">
+            <div class="flex">
+                <t-card style="width:80%;
+                background-color: hsl(0,0%,40%);
+                color:hsl(0, 0%, 90%)">
+                    <h2>影 音 播 放 小 程 序</h2>
+                    <t-divider></t-divider>
+                    <p>Moodyz、S-One 极简版</p>
+                </t-card>
+            </div>
+        </page>
+
+        <page id="page-main" style="background-color: hsl(0,0%,40%);color:hsl(0, 0%, 90%)">
+            <div style="display:grid;                
+                grid-template-rows:50px 1fr 50px;
+                height:100%;
+                width: min(100vw, var(--max-width));
+                background-color: hsl(0,0%,40%);
+                color:hsl(0, 0%, 90%);
+                position:relative;">
+
+                <header class="header">
+                    <t-select v-model="site" :options="sites" :prefix-icon="siteIcon" style="width:100%"></t-select>
+                    <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
+                    <t-button variant="outline" :loading="loading" style="width:100%"></t-button>
+                </header>
+
+                <main class="main">
+                    <div v-for="(card,index) in cards" style="
+                    background-color: whitesmoke;
+                    border-radius: 3px;
+                    width:100%;">
+                        <img :index="index" :src="card.img" style="width:100%;
+                        border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.src)" />
+                        <div style="display:grid;
+                        grid-template-columns: 40% 1fr; 
+                        gap:10px;
+                        padding:8px;">
+                            <t-button variant="outline" :data-women="card['women-name']" style="font-size:12px;"
+                                onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
+                            <t-button variant="outline" :data-women="card.women" style="font-size:12px;"
+                                onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
+                        </div>
+                    </div>
+                </main>
+
+                <footer class="footer">
+                    <t-button variant="outline" style="width:100%;font-size:12px;">
+                        <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
+                    <t-button variant="outline" style="width:100%;font-size:12px;">第 {{page}} 页</t-button>
+                    <t-button variant="outline" onclick="vm.previous()" style="width:100%;font-size:12px;">
+                        <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
+                    <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
+                        <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
+                </footer>
+                <dialog name="showPic" class="showpic">
+                    <div style="display:flex;
+                        flex-direction: column;
+                        gap:8px;
+                        height:100%;
+                        width:100%;">
+                        <div style="flex:1 1 auto;
+                            overflow: scroll;
+                            object-fit: cover;
+                            position: relative;">
+                            <img :src="showImg" style="position:absolute; width:100%;" onclick="vm.closeShowPic()" />
+                        </div>
+                        <div style="flex:0 0 30px;
+                            display:flex;
+                            align-items: center;
+                            justify-content: center;">
+                            <input type="range" min="100" max="200" step="10" value="100"
+                                style="width:calc(100% - 12px);" onchange="vm.scaleImg(this.value)" />
+                        </div>
+                    </div>
+                </dialog>
+
+                <dialog name="play">
+                    <div style="padding:8px;height:calc(100% - 16px);">
+                        <t-card :title="play" :subtitle="women" header-bordered style="height:100%;
+                            display:flex;
+                            flex-direction: column;">
+                            <template #actions>
+                                <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlay()">
+                                    <template #icon><t-icon name="close" /></template>
+                                </t-button>
+                            </template>
+                            <!-- <p style="font-weight:bold;">{{title}}</p> -->
+                            <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" style="flex:1 1;">
+                                <t-swiper-item v-for="img in imgs" :key="img">
+                                    <t-image :src="img" fit="contain" style="width:100%;height:40vh" />
+                                </t-swiper-item>
+                            </t-swiper>
+                            <t-divider style="margin:16px 0px;flex:0 0"></t-divider>
+                            <video controls preload="metadata" :src="video" style="width:100%;flex:0 0"></video>
+                            <div style="margin:8px 0 0 0;
+                            flex:0 0;
+                            display:grid;
+                            grid-template-columns: 1fr 1fr 1fr;
+                            gap:8px;
+                            width:100%">
+                                <t-button variant="outline" style="font-size:12px;">下 载</t-button>
+                                <t-button variant="outline" style="font-size:12px;" onclick="vm.mPlay()">播 放</t-button>
+                                <t-button variant="outline" style="font-size:12px;" onclick="vm.pause()">暂 停</t-button>
+                            </div>
+                        </t-card>
+                    </div>
+                </dialog>
+            </div>
+        </page>
+    </templates>
+
+    <script src="./assets/tools.js"></script>
+    <script src="./assets/app.js"></script>
+</body>
+
+</html>

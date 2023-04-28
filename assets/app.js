@@ -84,11 +84,19 @@ const pagePlayAll = {
   template: "#page-playall",
 };
 
+const pageShowPic = {
+  data() {
+    return app;
+  },
+  template: "#page-showPic",
+};
+
 const routes = [
   { path: "", component: pageLogo },
   { path: "/main", component: pageMain },
   { path: "/play", component: pagePlay },
   { path: "/playall", component: pagePlayAll },
+  { path: "/showpic", component: pageShowPic },
 ];
 
 const router = VueRouter.createRouter({
@@ -151,6 +159,7 @@ const app = Vue.reactive({
   title: "",
   desc: "",
   video: "",
+  showImg: "",
   imgs: [],
   // 全部播放IDs
   playall: [],
@@ -180,8 +189,7 @@ const vm = Vue.createApp({
   },
   methods: {
     scaleImg(value = 1) {
-      const ele = $("dialog.showpics");
-      const img = $("img", ele);
+      const img = $("img");
       img.style.transform = `translate(${img.width * value - img.width}px, ${
         img.height * value - img.height
       }px) scale(${value})`;
@@ -191,17 +199,8 @@ const vm = Vue.createApp({
       );
     },
     showPic(url = "") {
-      const ele = $("dialog.showpics");
-      const img = $("img", ele);
-      img.style.transform = `scale(1)`;
-      img.src = url;
-      ele.open = true;
-    },
-    closeShowPic() {
-      const ele = $("dialog.showpics");
-      const range = $("input", ele);
-      range.value = 1;
-      ele.open = false;
+      vm.showImg = url;
+      vm.$router.push("/showpic");
     },
     mPlay() {
       const video = $("video");

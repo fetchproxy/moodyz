@@ -64,17 +64,11 @@
             max-width: 412px; */
         }
 
-        .showpics {
+        .showpic {
             background-color: hsl(0, 0%, 30%);
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-            bottom: 0px;
-            height: calc(100% - 26px);
-            width: calc(100% - 14px);
-            padding: 10px 4px;
-            z-index: 100;
+            padding: 4px;
+            height: calc(100% - 8px);
+            width: calc(100% - 8px);
         }
     </style>
 </head>
@@ -141,27 +135,29 @@
                     <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
                         <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
                 </footer>
-                <dialog class="showpics">
-                    <div style="display:flex;
-                    flex-direction: column;
-                    gap:8px;
-                    height:100%;
-                    width:100%;">
-                        <div style="flex:1 1 auto;
-                        overflow: scroll;
-                        object-fit: none;">
-                            <img style="width:100%;" onclick="vm.closeShowPic()" />
-                        </div>
-                        <div style="flex:0 0 30px;
-                        display:flex;
-                        align-items: center;
-                        justify-content: center;">
-                            <input type="range" min="1" max="2" step="0.1" value="1" style="width:100%;"
-                                onchange="vm.scaleImg(this.value)" />
-                        </div>
-                    </div>
+            </div>
+        </page>
 
-                </dialog>
+        <page id="page-showPic">
+            <div class="showpic">
+                <div style="display:flex;
+                flex-direction: column;
+                gap:8px;
+                height:100%;
+                width:100%;">
+                    <div style="flex:1 1 auto;
+                    overflow: scroll;
+                    object-fit: none;">
+                        <img :src="showImg" style="width:100%;" onclick="vm.$router.goto('/main')" />
+                    </div>
+                    <div style="flex:0 0 30px;
+                    display:flex;
+                    align-items: center;
+                    justify-content: center;">
+                        <input type="range" min="1" max="2" step="0.1" value="1" style="width:calc(100% - 8px);"
+                            onchange="vm.scaleImg(this.value)" />
+                    </div>
+                </div>
             </div>
         </page>
 

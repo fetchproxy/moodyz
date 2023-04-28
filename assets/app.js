@@ -61,42 +61,10 @@ const pageMain = {
   template: "#page-main",
 };
 
-const pagePlay = {
-  data() {
-    return app;
-  },
-  async beforeMount() {
-    await vm.getPlay(`${app.site}/works/detail/${app.play}`);
-  },
-  beforeUnmount() {
-    app.women = "";
-    app.title = "";
-    app.imgs = [];
-    app.video = "";
-  },
-  template: "#page-play",
-};
-
-const pagePlayAll = {
-  data() {
-    return app;
-  },
-  template: "#page-playall",
-};
-
-const pageShowPic = {
-  data() {
-    return app;
-  },
-  template: "#page-showPic",
-};
-
 const routes = [
   { path: "", component: pageLogo },
+  // { path: "", component: pageMain },
   { path: "/main", component: pageMain },
-  { path: "/play", component: pagePlay },
-  { path: "/playall", component: pagePlayAll },
-  { path: "/showpic", component: pageShowPic },
 ];
 
 const router = VueRouter.createRouter({
@@ -167,8 +135,7 @@ const app = Vue.reactive({
   caches: {},
   //
   loading: false,
-  // 读取数据进度
-  progress: 0,
+
   // t-select site left icon
   siteIcon: Vue.h(
     "svg",
@@ -188,45 +155,61 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
+    //打开对话框
+    openDialog(name = "") {
+      const dialog = $(`dialog[name='${name}']`);
+      dialog.open = true;
+    },
+    //关闭对话框
+    closeDialog(name = "") {
+      const dialog = $(`dialog[name='${name}']`);
+      dialog.open = false;
+    },
+    //缩放图片
     scaleImg(value = 1) {
       const ele = $("dialog");
       const img = $("img", ele);
-      img.style.transform = `translate(${img.width * value - img.width}px, ${
-        img.height * value - img.height
-      }px) scale(${value})`;
-      img.parentElement.scroll(
-        `${img.width * value - img.width}`,
-        `${img.height * value - img.height}`,
-      );
+      img.style.width = `${value}%`;
+      img.style.height = `${img.width * 1.4}px`;
     },
+    //显示
     showPic(url = "") {
+      window.history.pushState(null, null);
+      // deno-lint-ignore no-window-prefix
+      window.addEventListener("popstate", this.closeShowPic(), true);
       vm.showImg = url;
-      const ele = $("dialog");
-      ele.open = true;
+      this.openDialog("showPic");
       // vm.$router.push("/showpic");
     },
+
     closeShowPic() {
-      const ele = $("dialog");
+      this.closeDialog("showPic");
+      const ele = $("dialog[name='showPic']");
       const range = $("input", ele);
       const img = $("img", ele);
-      img.style.transform = "translate(0,0) scale(1)";
+      img.style.width = "100%";
+      // img.style.height = `${img.width * 1.4}px`;
+      img.style.height = "auto";
       vm.showImg = "";
-      range.value = 1;
-      ele.open = false;
+      range.value = 100;
     },
+
     mPlay() {
       const video = $("video");
       if (video) video.play();
     },
+
     pause() {
       const video = $("video");
       if (video) video.pause();
     },
+
     previous() {
       if (vm.page > 1) {
         vm.page--;
       }
     },
+
     next() {
       if (vm.path == "/top") return;
       vm.page++;
@@ -238,13 +221,28 @@ const vm = Vue.createApp({
       }
       return `${app.site}${app.path}?page=${app.page}`;
     },
-    setPlay(id, women) {
+
+    closePlay() {
+      this.closeDialog("play");
+      app.women = "";
+      app.title = "";
+      app.imgs = [];
+      app.video = "";
+    },
+
+    async setPlay(id, women) {
       app.women = women;
       if (id) {
         app.play = id;
-        vm.$router.push("/play");
+        // vm.$router.push("/play");
+        window.history.pushState(null, null);
+        // deno-lint-ignore no-window-prefix
+        window.addEventListener("popstate", this.closePlay(), true);
+        this.openDialog("play");
+        await vm.getPlay(`${app.site}/works/detail/${app.play}`);
       }
     },
+
     setWomen(womenID = "", womenName = "") {
       if (womenID == "") return;
       const value = `/actress/detail/${womenID}`;
@@ -258,6 +256,7 @@ const vm = Vue.createApp({
       app.women = womenName;
       app.path = value;
     },
+
     async getWomen(url = "") {
       const cards = [];
       if (app.caches[url]) {

@@ -174,12 +174,12 @@ const vm = Vue.createApp({
     },
     //显示
     showPic(url = "") {
-      window.history.pushState(null, null);
-      // deno-lint-ignore no-window-prefix
-      window.addEventListener("popstate", this.closeShowPic(), true);
+      // window.history.pushState({ back: "#/main2" }, "showpic", "");
+      // window.addEventListener("popstate", this.closeShowPic(), true);
       vm.showImg = url;
       this.openDialog("showPic");
       // vm.$router.push("/showpic");
+      // history.back(0);
     },
 
     closeShowPic() {
@@ -192,6 +192,7 @@ const vm = Vue.createApp({
       img.style.height = "auto";
       vm.showImg = "";
       range.value = 100;
+      // history.back(0);
     },
 
     mPlay() {
@@ -235,9 +236,8 @@ const vm = Vue.createApp({
       if (id) {
         app.play = id;
         // vm.$router.push("/play");
-        window.history.pushState(null, null);
-        // deno-lint-ignore no-window-prefix
-        window.addEventListener("popstate", this.closePlay(), true);
+        // window.history.pushState({}, "", "");
+        // window.addEventListener("popstate", this.closePlay(), true);
         this.openDialog("play");
         await vm.getPlay(`${app.site}/works/detail/${app.play}`);
       }

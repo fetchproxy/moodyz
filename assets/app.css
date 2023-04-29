@@ -14,7 +14,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: hsl(0, 0%, 20%);
+    background-color: var(--td-gray-color-12);
     overflow: hidden;
 }
 
@@ -23,8 +23,7 @@ app {
     width: 100%;
     position: relative;
     max-width: var(--max-width);
-    background-color: hsl(0, 0%, 30%);
-
+    background-color: var(--td-gray-color-10);
 }
 
 templates {

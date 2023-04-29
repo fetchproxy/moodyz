@@ -130,7 +130,8 @@ const app = Vue.reactive({
   showImg: "",
   imgs: [],
   // 全部播放IDs
-  playall: [],
+  videos: [],
+  videoIndex: 0,
   // 系统缓存
   caches: {},
   //
@@ -155,6 +156,39 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
+    closePlayAll() {
+      this.closeDialog("playall");
+      this.videos = [];
+      this.videoIndex = 0;
+    },
+    openPlayAll() {
+      this.openDialog("playall");
+      this.playAll();
+    },
+    playAll() {
+      this.cards.forEach(async (card) => {
+        const url = `${app.site}/works/detail/${card.id}`;
+        const dom = DOM(
+          await getHTML(url, true, 20),
+        );
+        const video = $("video", dom);
+        if (video == undefined) {
+          return;
+        }
+        this.videos.push(video.src);
+      });
+    },
+    nextVideo() {
+      if (this.videos.length == 0) return;
+      if ((this.videos.length - 1) > this.videoIndex) {
+        this.videoIndex++;
+        const video = $("video");
+        video.play();
+        return;
+      }
+      this.videoIndex = 0;
+      video.play();
+    },
     //打开对话框
     openDialog(name = "") {
       const dialog = $(`dialog[name='${name}']`);
@@ -220,6 +254,7 @@ const vm = Vue.createApp({
       if (app.path == "/top") {
         return `${app.site}${app.path}`;
       }
+      if (app.page == 1) return `${app.site}${app.path}`;
       return `${app.site}${app.path}?page=${app.page}`;
     },
 

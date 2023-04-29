@@ -94,27 +94,28 @@
             </div>
         </page>
 
-        <page id="page-main" style="background-color: hsl(0,0%,40%);color:hsl(0, 0%, 90%)">
+        <page id="page-main" style="background-color: var(--td-gray-color-8);color:var(--td-gray-color-2)">
             <div style="display:grid;                
                 grid-template-rows:50px 1fr 50px;
                 height:100%;
                 width: min(100vw, var(--max-width));
-                background-color: hsl(0,0%,40%);
-                color:hsl(0, 0%, 90%);
+                background-color: var(--td-gray-color-8);
+                color:var(--td-gray-color-2);
                 position:relative;">
 
                 <header class="header">
-                    <t-select v-model="site" :options="sites" :prefix-icon="siteIcon" style="width:100%"></t-select>
+                    <t-select v-model="site" :options="sites" :prefix-icon="siteIcon" style="width:100%;"></t-select>
                     <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
-                    <t-button variant="outline" :loading="loading" style="width:100%"></t-button>
+                    <t-button variant="outline" :loading="loading" style="width:100%;"></t-button>
                 </header>
 
                 <main class="main">
                     <div v-for="(card,index) in cards" style="
-                    background-color: whitesmoke;
+                    background-color: var(--td-gray-color-6);
                     border-radius: 3px;
                     width:100%;">
                         <img :index="index" :src="card.img" style="width:100%;
+                        background-color: var(--td-gray-color-5);
                         border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.src)" />
                         <div style="display:grid;
                         grid-template-columns: 40% 1fr; 
@@ -131,12 +132,14 @@
                 <footer class="footer">
                     <t-button variant="outline" style="width:100%;font-size:12px;">
                         <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
-                    <t-button variant="outline" style="width:100%;font-size:12px;">第 {{page}} 页</t-button>
+                    <t-button variant="outline" style="width:100%;font-size:12px;">第 {{page}}
+                        页</t-button>
                     <t-button variant="outline" onclick="vm.previous()" style="width:100%;font-size:12px;">
                         <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
                     <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
                         <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
                 </footer>
+
                 <dialog name="showPic" class="showpic">
                     <div style="display:flex;
                         flex-direction: column;
@@ -161,24 +164,21 @@
 
                 <dialog name="play">
                     <div style="padding:8px;height:calc(100% - 16px);">
-                        <t-card :title="play" :subtitle="women" header-bordered style="height:100%;
-                            display:flex;
-                            flex-direction: column;">
+                        <t-card :title="play" :subtitle="women" header-bordered>
                             <template #actions>
                                 <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlay()">
                                     <template #icon><t-icon name="close" /></template>
                                 </t-button>
                             </template>
                             <!-- <p style="font-weight:bold;">{{title}}</p> -->
-                            <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" style="flex:1 1;">
+                            <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}">
                                 <t-swiper-item v-for="img in imgs" :key="img">
-                                    <t-image :src="img" fit="contain" style="width:100%;height:40vh" />
+                                    <t-image :src="img" fit="contain" style="width:100%;height:40vh;" />
                                 </t-swiper-item>
                             </t-swiper>
-                            <t-divider style="margin:16px 0px;flex:0 0"></t-divider>
-                            <video controls preload="metadata" :src="video" style="width:100%;flex:0 0"></video>
-                            <div style="margin:8px 0 0 0;
-                            flex:0 0;
+                            <t-divider style="margin:16px 0px;"></t-divider>
+                            <video controls preload="metadata" :src="video" style="width:100%;"></video>
+                            <div style="margin:8px 0 0 0;                            
                             display:grid;
                             grid-template-columns: 1fr 1fr 1fr;
                             gap:8px;

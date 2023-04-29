@@ -30,7 +30,7 @@
             grid-template-columns: 38% calc(50% - 16px) 12%;
             gap: 8px;
             /* other */
-/*             width: min(100vw, var(--max-width)); */
+            width: min(100vw, var(--max-width));
             /* uc */
             width: 100%;
             max-width: 412px;
@@ -45,7 +45,7 @@
             gap: 8px 8px;
             background-color: hsl(0, 0%, 50%);
             /* other */
-/*             width: min(100vw, var(--max-width)); */
+            width: min(100vw, var(--max-width));
             /* uc */
             width: 100%;
             max-width: 412px;
@@ -58,7 +58,7 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
             /* other */
-/*             width: min(100vw, var(--max-width)); */
+            width: min(100vw, var(--max-width));
             /* uc */
             width: 100%;
             max-width: 412px;
@@ -194,16 +194,15 @@
                 </dialog>
 
                 <dialog name="playall">
-                    <t-card title="播放视频" subtitle="页面全部" header-bordered>
+                    <t-card title="播放全部视频" :subtitle="`${videoIndex+1} / ${videos.length}`" header-bordered>
                         <template #actions>
                             <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlayAll()">
                                 <template #icon><t-icon name="close" /></template>
                             </t-button>
                         </template>
-                        <video controls autoplay="true" x5-playsinline webkit-playsinline="true"
-                            playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5" preload="metadata"
-                            :src="videos[videoIndex]" style="width:100%;" onended="vm.nextVideo()"
-                            onready="this.play()"></video>
+                        <video controls autoplay="true" x5-playsinline webkit-playsinline="true" playsinline="true"
+                            x-webkit-airplay="allow" x5-video-player-type="h5" preload="metadata"
+                            :src="videos[videoIndex]" style="width:100%;" onended="vm.nextVideo()"></video>
                     </t-card>
                 </dialog>
             </div>

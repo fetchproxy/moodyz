@@ -1,3 +1,4 @@
+// 获取影片序列数据
 const getCards = async (url = "") => {
   const cards = [];
   if (app.caches[url]) {
@@ -43,6 +44,7 @@ const getCards = async (url = "") => {
   });
 };
 
+// logo 页面组件
 const pageLogo = {
   data() {
     return app;
@@ -54,6 +56,7 @@ const pageLogo = {
   template: "#page-logo",
 };
 
+// main 页面组件
 const pageMain = {
   data() {
     return app;
@@ -61,12 +64,14 @@ const pageMain = {
   template: "#page-main",
 };
 
+//所有路由信息
 const routes = [
   { path: "", component: pageLogo },
   // { path: "", component: pageMain },
   { path: "/main", component: pageMain },
 ];
 
+//app 路由
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
   routes,
@@ -123,18 +128,23 @@ const app = Vue.reactive({
   page: 1,
   // 当前播放ID
   play: "",
+  // 女友名称
   women: "",
+  // 影片标题
   title: "",
-  desc: "",
+  // 影片视频地址
   video: "",
+  // 缩放图片地址
   showImg: "",
+  //单个作品的所有图片
   imgs: [],
-  // 全部播放IDs
+  // 全部播放视频地址
   videos: [],
+  //当前播放视频索引
   videoIndex: 0,
   // 系统缓存
   caches: {},
-  //
+  // 系统作业标志
   loading: false,
 
   // t-select site left icon
@@ -156,15 +166,18 @@ const vm = Vue.createApp({
     return app;
   },
   methods: {
+    // 关闭播放所有视频页面
     closePlayAll() {
       this.closeDialog("playall");
       this.videos = [];
       this.videoIndex = 0;
     },
+    // 打开播放所有视频页面
     openPlayAll() {
       this.openDialog("playall");
       this.playAll();
     },
+    // 获取所有视频地址及播放视频
     playAll() {
       this.cards.forEach(async (card) => {
         const url = `${app.site}/works/detail/${card.id}`;
@@ -175,19 +188,21 @@ const vm = Vue.createApp({
         if (video == undefined) {
           return;
         }
-        this.videos.push(video.src);
+        this.videos.push({ "id": card.id, "src": video.src });
+        // this.videos.push(video.src);
       });
     },
+    // 播放所有视频中下一个视频
     nextVideo() {
       if (this.videos.length == 0) return;
       if ((this.videos.length - 1) > this.videoIndex) {
         this.videoIndex++;
         const video = $("video");
-        video.play();
+        video.load();
         return;
       }
       this.videoIndex = 0;
-      video.play();
+      video.load();
     },
     //打开对话框
     openDialog(name = "") {
@@ -206,7 +221,7 @@ const vm = Vue.createApp({
       img.style.width = `${value}%`;
       img.style.height = `${img.width * 1.4}px`;
     },
-    //显示
+    //显示缩放图片页面
     showPic(url = "") {
       // window.history.pushState({ back: "#/main2" }, "showpic", "");
       // window.addEventListener("popstate", this.closeShowPic(), true);
@@ -215,7 +230,7 @@ const vm = Vue.createApp({
       // vm.$router.push("/showpic");
       // history.back(0);
     },
-
+    // 关闭缩放图片页面
     closeShowPic() {
       this.closeDialog("showPic");
       const ele = $("dialog[name='showPic']");
@@ -228,28 +243,28 @@ const vm = Vue.createApp({
       range.value = 100;
       // history.back(0);
     },
-
+    // 播放视频按钮
     mPlay() {
       const video = $("video");
       if (video) video.play();
     },
-
+    // 视频暂停按钮
     pause() {
       const video = $("video");
       if (video) video.pause();
     },
-
+    // 上一页
     previous() {
       if (vm.page > 1) {
         vm.page--;
       }
     },
-
+    // 下一页
     next() {
       if (vm.path == "/top") return;
       vm.page++;
     },
-
+    // 获取当前地址
     URL() {
       if (app.path == "/top") {
         return `${app.site}${app.path}`;
@@ -257,7 +272,7 @@ const vm = Vue.createApp({
       if (app.page == 1) return `${app.site}${app.path}`;
       return `${app.site}${app.path}?page=${app.page}`;
     },
-
+    // 关闭播放页面
     closePlay() {
       this.closeDialog("play");
       app.women = "";
@@ -265,7 +280,7 @@ const vm = Vue.createApp({
       app.imgs = [];
       app.video = "";
     },
-
+    // 打开播放页面
     async setPlay(id, women) {
       app.women = women;
       if (id) {
@@ -277,7 +292,7 @@ const vm = Vue.createApp({
         await vm.getPlay(`${app.site}/works/detail/${app.play}`);
       }
     },
-
+    // 设置女优信息
     setWomen(womenID = "", womenName = "") {
       if (womenID == "") return;
       const value = `/actress/detail/${womenID}`;
@@ -291,7 +306,7 @@ const vm = Vue.createApp({
       app.women = womenName;
       app.path = value;
     },
-
+    // 获取女优数据
     async getWomen(url = "") {
       const cards = [];
       if (app.caches[url]) {
@@ -331,6 +346,7 @@ const vm = Vue.createApp({
         app.cards = cards;
       });
     },
+    // 获取数据
     async get() {
       const main = $("app main");
       if (main) {
@@ -348,6 +364,7 @@ const vm = Vue.createApp({
         main.scroll(0, 0);
       }
     },
+    // 获取视频信息
     async getPlay(url = "") {
       const dom = DOM(
         await getHTML(url, true, 20),
@@ -369,9 +386,11 @@ const vm = Vue.createApp({
     },
   },
   watch: {
+    // 观测page变化
     page: async () => {
       await vm.get();
     },
+    // 观测site变化
     site: async () => {
       if (vm.path == "/top") {
         if (vm.page == 1) {
@@ -383,6 +402,7 @@ const vm = Vue.createApp({
         vm.path = "/top";
       }
     },
+    // 观测path变化
     path: async () => {
       if (vm.page == 1) {
         await vm.get();

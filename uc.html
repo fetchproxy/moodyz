@@ -23,45 +23,36 @@
     <link rel="stylesheet" href="./assets/app.css" />
 
     <style>
-        .header {
-            box-sizing: border-box;
-            padding: 8px;
-            display: grid;
-            grid-template-columns: 38% calc(50% - 16px) 12%;
-            gap: 8px;
-            /* other */
-            width: min(100vw, var(--max-width));
-            /* uc */
-            width: 100%;
-            max-width: 412px;
-        }
-
-        .main {
-            box-sizing: border-box;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow-y: auto;
-            padding: 8px;
-            gap: 8px 8px;
-            background-color: hsl(0, 0%, 50%);
-            /* other */
-            width: min(100vw, var(--max-width));
-            /* uc */
-            width: 100%;
-            max-width: 412px;
-        }
-
+        .header,
+        .main,
         .footer {
             box-sizing: border-box;
             padding: 8px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
             /* other */
-            width: min(100vw, var(--max-width));
+/*             width: min(100vw, var(--max-width)); */
             /* uc */
             width: 100%;
             max-width: 412px;
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: 38% calc(50% - 16px) 12%;
+            gap: 8px;
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow-y: auto;
+            gap: 8px 8px;
+            background-color: hsl(0, 0%, 50%);
+        }
+
+        .footer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
         }
 
         dialog {
@@ -194,7 +185,8 @@
                 </dialog>
 
                 <dialog name="playall">
-                    <t-card title="播放全部视频" :subtitle="`${videoIndex+1} / ${videos.length}`" header-bordered>
+                    <t-card :title="`连续播放 ${videos[videoIndex]!=undefined?videos[videoIndex].id:''}`"
+                        :subtitle="`${videoIndex+1} / ${videos.length}`" header-bordered>
                         <template #actions>
                             <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlayAll()">
                                 <template #icon><t-icon name="close" /></template>
@@ -202,7 +194,8 @@
                         </template>
                         <video controls autoplay="true" x5-playsinline webkit-playsinline="true" playsinline="true"
                             x-webkit-airplay="allow" x5-video-player-type="h5" preload="metadata"
-                            :src="videos[videoIndex]" style="width:100%;" onended="vm.nextVideo()"></video>
+                            :src="videos[videoIndex]!=undefined?videos[videoIndex].src:''" style="width:100%;"
+                            onended="vm.nextVideo()"></video>
                     </t-card>
                 </dialog>
             </div>

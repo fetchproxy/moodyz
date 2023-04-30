@@ -29,11 +29,12 @@
             display: grid;
             grid-template-columns: 38% calc(50% - 16px) 12%;
             gap: 8px;
-            /* other */
+            /* uc or other */
+            width: 100%;
             width: min(100vw, var(--max-width));
-            /* uc */
-            /* width: 100%;
-            max-width: 412px; */
+            /* uc or other */
+            max-width: 412px;
+            max-width: min(100vw, var(--max-width));
         }
 
         .main {
@@ -44,11 +45,12 @@
             padding: 8px;
             gap: 8px 8px;
             background-color: hsl(0, 0%, 50%);
-            /* other */
+            /* uc or other */
+            width: 100%;
             width: min(100vw, var(--max-width));
-            /* uc */
-            /* width: 100%;
-            max-width: 412px; */
+            /* uc or other */
+            max-width: 412px;
+            max-width: min(100vw, var(--max-width));
         }
 
         .footer {
@@ -57,11 +59,12 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
-            /* other */
+            /* uc or other */
+            width: 100%;
             width: min(100vw, var(--max-width));
-            /* uc */
-            /* width: 100%;
-            max-width: 412px; */
+            /* uc or other */
+            max-width: 412px;
+            max-width: min(100vw, var(--max-width));
         }
 
         dialog {

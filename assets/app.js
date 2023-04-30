@@ -138,6 +138,7 @@ const app = Vue.reactive({
   showImg: "",
   //单个作品的所有图片
   imgs: [],
+  imgIndex: 0,
   // 全部播放视频地址
   videos: [],
   //当前播放视频索引
@@ -216,17 +217,45 @@ const vm = Vue.createApp({
     },
     //缩放图片
     scaleImg(value = 1) {
-      const ele = $("dialog");
+      const ele = $("dialog[name='showPic']");
       const img = $("img", ele);
       img.style.width = `${value}%`;
-      img.style.height = `${img.width * 1.4}px`;
+      const range = $("input", ele);
+      range.value = value;
+    },
+    preImg() {
+      if (this.imgIndex > 0) {
+        this.imgIndex--;
+      } else {
+        this.imgIndex = this.imgs.length - 1;
+      }
+      this.scaleImg(100);
+    },
+    nextImg() {
+      if (this.imgIndex < this.imgs.length - 1) {
+        this.imgIndex++;
+      } else {
+        this.imgIndex = 0;
+      }
+      this.scaleImg(100);
     },
     //显示缩放图片页面
-    showPic(url = "") {
+    async showPic(index = 0) {
       // window.history.pushState({ back: "#/main2" }, "showpic", "");
       // window.addEventListener("popstate", this.closeShowPic(), true);
-      vm.showImg = url;
+      this.showImg = this.cards[index].img;
+      this.imgs = [];
+      this.imgs.push(this.cards[index].img);
       this.openDialog("showPic");
+
+      const url = `${app.site}/works/detail/${this.cards[index].id}`;
+      const dom = DOM(
+        await getHTML(url, true, 20),
+      );
+      const imgLists = $$("img.swiper-lazy", dom);
+      imgLists.forEach((img) => {
+        this.imgs.push(img.dataset.src);
+      });
       // vm.$router.push("/showpic");
       // history.back(0);
     },

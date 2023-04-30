@@ -136,7 +136,7 @@
                 </footer>
 
                 <dialog name="showPic" class="showpic">
-                    <t-card title="看图" header-bordered>
+                    <t-card title="大图模式" subtitle="可缩放" header-bordered>
                         <template #actions>
                             <t-button theme="danger" shape="circle" variant="base" onclick="vm.closeShowPic()">
                                 <template #icon><t-icon name="close" /></template>
@@ -154,8 +154,8 @@
                         <div style="display:flex;
                             align-items: center;
                             justify-content: center;">
-                            <input type="range" min="100" max="200" step="10" value="100"
-                                style="width:calc(100% - 12px);" onchange="vm.scaleImg(this.value)" />
+                            <input type="range" min="100" max="200" step="10" value="100" style="width:100%;"
+                                onchange="vm.scaleImg(this.value)" />
                         </div>
                     </t-card>
                 </dialog>

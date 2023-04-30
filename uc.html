@@ -28,7 +28,6 @@
         .footer {
             box-sizing: border-box;
             padding: 8px;
-
             /* other */
             width: min(100vw, var(--max-width));
 
@@ -111,7 +110,7 @@
                     width:100%;">
                         <img :index="index" :src="card.img" style="width:100%;
                         background-color: var(--td-gray-color-5);
-                        border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.src)" />
+                        border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.getAttribute('index'))" />
                         <div style="display:grid;
                         grid-template-columns: 40% 1fr; 
                         gap:10px;
@@ -136,7 +135,7 @@
                 </footer>
 
                 <dialog name="showPic" class="showpic">
-                    <t-card title="大图模式" subtitle="可缩放" header-bordered>
+                    <t-card title="大图 + 缩放" :subtitle="`${imgIndex+1} / ${imgs.length}`" header-bordered>
                         <template #actions>
                             <t-button theme="danger" shape="circle" variant="base" onclick="vm.closeShowPic()">
                                 <template #icon><t-icon name="close" /></template>
@@ -146,9 +145,16 @@
                         <div style="overflow: scroll;
                             object-fit: cover;
                             position: relative;
-                            height:70vh;
-                            margin-bottom: 20px;">
-                            <img :src="showImg" style="position:absolute; width:100%;" />
+                            height:65vh;
+                            margin-bottom: 8px;">
+                            <img :src="imgs[imgIndex]" style="position:absolute; width:100%;" />
+                        </div>
+
+                        <div style="display:grid;grid-template-columns: 1fr 1fr;gap:8px;margin-bottom:8px;">
+                            <t-button variant="outline" onclick="vm.preImg()" style="width:100%;font-size:12px;">
+                                <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
+                            <t-button variant="outline" onclick="vm.nextImg()" style="width:100%;font-size:12px;">
+                                <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
                         </div>
 
                         <div style="display:flex;

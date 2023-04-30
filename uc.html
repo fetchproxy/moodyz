@@ -28,8 +28,10 @@
         .footer {
             box-sizing: border-box;
             padding: 8px;
+
             /* other */
 /*             width: min(100vw, var(--max-width)); */
+
             /* uc */
             width: 100%;
             max-width: 412px;
@@ -134,25 +136,28 @@
                 </footer>
 
                 <dialog name="showPic" class="showpic">
-                    <div style="display:flex;
-                        flex-direction: column;
-                        gap:8px;
-                        height:100%;
-                        width:100%;">
-                        <div style="flex:1 1 auto;
-                            overflow: scroll;
+                    <t-card title="看图" header-bordered>
+                        <template #actions>
+                            <t-button theme="danger" shape="circle" variant="base" onclick="vm.closeShowPic()">
+                                <template #icon><t-icon name="close" /></template>
+                            </t-button>
+                        </template>
+
+                        <div style="overflow: scroll;
                             object-fit: cover;
-                            position: relative;">
-                            <img :src="showImg" style="position:absolute; width:100%;" onclick="vm.closeShowPic()" />
+                            position: relative;
+                            height:70vh;
+                            margin-bottom: 20px;">
+                            <img :src="showImg" style="position:absolute; width:100%;" />
                         </div>
-                        <div style="flex:0 0 30px;
-                            display:flex;
+
+                        <div style="display:flex;
                             align-items: center;
                             justify-content: center;">
                             <input type="range" min="100" max="200" step="10" value="100"
                                 style="width:calc(100% - 12px);" onchange="vm.scaleImg(this.value)" />
                         </div>
-                    </div>
+                    </t-card>
                 </dialog>
 
                 <dialog name="play">

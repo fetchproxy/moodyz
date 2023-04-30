@@ -1,49 +1,3 @@
-// 获取影片序列数据
-const getCards = async (url = "") => {
-  const cards = [];
-  if (app.caches[url]) {
-    app.cards = app.caches[url];
-    return;
-  }
-  const dom = DOM(
-    await getHTML(url, true, 20),
-  );
-  const lists = $$("div.c-card", dom);
-  const length = lists.length;
-  let index = 1;
-  lists.forEach((card) => {
-    app.progress = index / length * 100;
-    index++;
-    const a = $("a.img.hover", card);
-    const strs = a.href.split("/");
-    const idStr = strs[strs.length - 1].split("?");
-    const id = idStr[0];
-    const img = $("img", card);
-    const title = $("p.text", card);
-    let women = card.children[1];
-    let womenID = "";
-    if (women != undefined) {
-      if (women.href != undefined) {
-        womenID = women.href.split("/");
-        womenID = womenID[womenID.length - 1];
-      }
-    } else {
-      women = Vue.h("a", { href: "" }, "");
-    }
-
-    cards.push({
-      "id": id,
-      "url": `#/play/${id}`,
-      "img": img.dataset.src,
-      "title": title.textContent,
-      "women": womenID || "",
-      "women-name": women.textContent || "",
-    });
-    app.caches[url] = cards;
-    app.cards = cards;
-  });
-};
-
 // logo 页面组件
 const pageLogo = {
   data() {
@@ -124,6 +78,8 @@ const app = Vue.reactive({
     { label: "偷拍", value: "/works/list/genre/5035" },
     { label: "女搜查官", value: "/works/list/genre/5037" },
   ],
+  //
+  cards: [],
   // 当前页
   page: 1,
   // 当前播放ID
@@ -144,7 +100,11 @@ const app = Vue.reactive({
   //当前播放视频索引
   videoIndex: 0,
   // 系统缓存
-  caches: {},
+  caches: {
+    womens: {},
+    cards: {},
+    films: {},
+  },
   // 系统作业标志
   loading: false,
 
@@ -182,6 +142,13 @@ const vm = Vue.createApp({
     playAll() {
       this.cards.forEach(async (card) => {
         const url = `${app.site}/works/detail/${card.id}`;
+        //
+        if (vm.caches.films[url]) {
+          const film = vm.caches.films[url];
+          vm.videos.push({ id: card.id, src: film.video });
+          return;
+        }
+        //
         const dom = DOM(
           await getHTML(url, true, 20),
         );
@@ -189,8 +156,7 @@ const vm = Vue.createApp({
         if (video == undefined) {
           return;
         }
-        this.videos.push({ "id": card.id, "src": video.src });
-        // this.videos.push(video.src);
+        vm.videos.push({ id: card.id, src: video.src });
       });
     },
     // 播放所有视频中下一个视频
@@ -241,23 +207,22 @@ const vm = Vue.createApp({
     },
     //显示缩放图片页面
     async showPic(index = 0) {
-      // window.history.pushState({ back: "#/main2" }, "showpic", "");
-      // window.addEventListener("popstate", this.closeShowPic(), true);
-      this.showImg = this.cards[index].img;
-      this.imgs = [];
-      this.imgs.push(this.cards[index].img);
-      this.openDialog("showPic");
-
+      vm.showImg = this.cards[index].img;
+      vm.imgs = [];
+      vm.imgIndex = 0;
+      vm.imgs.push(vm.showImg);
+      vm.openDialog("showPic");
       const url = `${app.site}/works/detail/${this.cards[index].id}`;
-      const dom = DOM(
-        await getHTML(url, true, 20),
-      );
-      const imgLists = $$("img.swiper-lazy", dom);
-      imgLists.forEach((img) => {
-        this.imgs.push(img.dataset.src);
-      });
-      // vm.$router.push("/showpic");
-      // history.back(0);
+      // 缓存
+      if (this.caches.films[url]) {
+        const film = vm.caches.films[url];
+        film.imgs.forEach((img) => {
+          vm.imgs.push(img);
+        });
+        return;
+      }
+      // 爬虫
+      await this.getPlay(url);
     },
     // 关闭缩放图片页面
     closeShowPic() {
@@ -266,11 +231,8 @@ const vm = Vue.createApp({
       const range = $("input", ele);
       const img = $("img", ele);
       img.style.width = "100%";
-      // img.style.height = `${img.width * 1.4}px`;
-      img.style.height = "auto";
       vm.showImg = "";
       range.value = 100;
-      // history.back(0);
     },
     // 播放视频按钮
     mPlay() {
@@ -321,7 +283,7 @@ const vm = Vue.createApp({
         await vm.getPlay(`${app.site}/works/detail/${app.play}`);
       }
     },
-    // 设置女优信息
+    // 设置女优路径信息
     setWomen(womenID = "", womenName = "") {
       if (womenID == "") return;
       const value = `/actress/detail/${womenID}`;
@@ -335,13 +297,60 @@ const vm = Vue.createApp({
       app.women = womenName;
       app.path = value;
     },
+    // 获取影片列表
+    async getCards(url = "") {
+      const cards = [];
+      // 缓存
+      if (app.caches.cards[url]) {
+        vm.cards = app.caches.cards[url];
+        return;
+      }
+      // 爬虫
+      const dom = DOM(
+        await getHTML(url, true, 20),
+      );
+      const lists = $$("div.c-card", dom);
+      lists.forEach((card) => {
+        const a = $("a.img.hover", card);
+        const strs = a.href.split("/");
+        const idStr = strs[strs.length - 1].split("?");
+        const id = idStr[0];
+        const img = $("img", card);
+        const title = $("p.text", card);
+        let women = card.children[1];
+        let womenID = "";
+        if (women != undefined) {
+          if (women.href != undefined) {
+            womenID = women.href.split("/");
+            womenID = womenID[womenID.length - 1];
+          }
+        } else {
+          women = Vue.h("a", { href: "" }, "");
+        }
+
+        cards.push({
+          "id": id,
+          "url": `#/play/${id}`,
+          "img": img.dataset.src,
+          "title": title.textContent,
+          "women": womenID || "",
+          "women-name": women.textContent || "",
+        });
+        if (cards.length > 0) {
+          this.caches.cards[url] = cards;
+        }
+        vm.cards = cards;
+      });
+    },
     // 获取女优数据
     async getWomen(url = "") {
       const cards = [];
-      if (app.caches[url]) {
-        app.cards = app.caches[url];
+      //
+      if (app.caches.womens[url]) {
+        vm.cards = app.caches.womens[url];
         return;
       }
+      //
       const dom = DOM(
         await getHTML(url, true, 20),
       );
@@ -371,8 +380,10 @@ const vm = Vue.createApp({
           "women": womenID || "",
           "women-name": women.textContent || app.women,
         });
-        app.caches[url] = cards;
-        app.cards = cards;
+        if (cards.length > 0) {
+          app.caches.womens[url] = cards;
+        }
+        vm.cards = cards;
       });
     },
     // 获取数据
@@ -385,7 +396,7 @@ const vm = Vue.createApp({
       if (vm.path.startsWith("/actress/detail")) {
         await this.getWomen(this.URL());
       } else {
-        await getCards(this.URL());
+        await this.getCards(this.URL());
       }
       vm.loading = false;
       if (main) {
@@ -395,23 +406,40 @@ const vm = Vue.createApp({
     },
     // 获取视频信息
     async getPlay(url = "") {
+      //
+      if (app.caches.films[url]) {
+        const film = app.caches.films[url];
+        vm.imgs = film.imgs;
+        vm.video = film.video;
+        vm.title = film.title;
+        return;
+      }
+      //
       const dom = DOM(
         await getHTML(url, true, 20),
       );
       const imgLists = $$("img.swiper-lazy", dom);
-      this.imgs = [];
+      const imgs = [];
       imgLists.forEach((img) => {
-        this.imgs.push(img.dataset.src);
+        imgs.push(img.dataset.src);
       });
 
       const title = $("h2.p-workPage__title", dom);
-      this.title = title.textContent;
-
       const video = $("video", dom);
       if (video == undefined) {
-        return;
+        vm.video = "";
+      } else {
+        vm.video = video.src;
       }
-      this.video = video.src;
+      vm.imgs = imgs;
+      vm.title = title.textContent;
+      if (imgs.length > 0) {
+        this.caches.films[url] = {
+          "title": title.textContent,
+          "imgs": imgs,
+          "video": vm.video,
+        };
+      }
     },
   },
   watch: {

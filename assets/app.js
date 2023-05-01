@@ -38,6 +38,9 @@ const app = Vue.reactive({
   sites: [
     { label: "MOODYZ", value: "https://moodyz.com" },
     { label: "S-One", value: "https://s1s1s1.com" },
+    { label: "OPPAI", value: "https://oppai-av.com" },
+    { label: "Rookie", value: "https://rookie-av.jp" },
+    { label: "KaWaii", value: "https://kawaiikawaii.jp" },
   ],
   // 当前路径
   path: "/top",
@@ -126,11 +129,7 @@ const vm = Vue.createApp({
   data() {
     return app;
   },
-  computed: {
-    maxWidth() {
-      return Math.min(screen.width, 500);
-    },
-  },
+  computed: {},
   methods: {
     // 关闭播放所有视频页面
     closePlayAll() {
@@ -281,9 +280,6 @@ const vm = Vue.createApp({
       app.women = women;
       if (id) {
         app.play = id;
-        // vm.$router.push("/play");
-        // window.history.pushState({}, "", "");
-        // window.addEventListener("popstate", this.closePlay(), true);
         this.openDialog("play");
         await vm.getPlay(`${app.site}/works/detail/${app.play}`);
       }
@@ -316,35 +312,39 @@ const vm = Vue.createApp({
       );
       const lists = $$("div.c-card", dom);
       lists.forEach((card) => {
-        const a = $("a.img.hover", card);
-        const strs = a.href.split("/");
-        const idStr = strs[strs.length - 1].split("?");
-        const id = idStr[0];
-        const img = $("img", card);
-        const title = $("p.text", card);
-        let women = card.children[1];
-        let womenID = "";
-        if (women != undefined) {
-          if (women.href != undefined) {
-            womenID = women.href.split("/");
-            womenID = womenID[womenID.length - 1];
+        try {
+          const a = $("a.img.hover", card);
+          const strs = a.href.split("/");
+          const idStr = strs[strs.length - 1].split("?");
+          const id = idStr[0];
+          const img = $("img", card);
+          const title = $("p.text", card);
+          let women = card.children[1];
+          let womenID = "";
+          if (women != undefined) {
+            if (women.href != undefined) {
+              womenID = women.href.split("/");
+              womenID = womenID[womenID.length - 1];
+            }
+          } else {
+            women = Vue.h("a", { href: "" }, "");
           }
-        } else {
-          women = Vue.h("a", { href: "" }, "");
-        }
 
-        cards.push({
-          "id": id,
-          "url": `#/play/${id}`,
-          "img": img.dataset.src,
-          "title": title.textContent,
-          "women": womenID || "",
-          "women-name": women.textContent || "",
-        });
-        if (cards.length > 0) {
-          this.caches.cards[url] = cards;
+          cards.push({
+            "id": id,
+            "url": `#/play/${id}`,
+            "img": img.dataset.src,
+            "title": title.textContent,
+            "women": womenID || "",
+            "women-name": women.textContent || "",
+          });
+          if (cards.length > 0) {
+            this.caches.cards[url] = cards;
+          }
+          vm.cards = cards;
+        } catch {
+          return;
         }
-        vm.cards = cards;
       });
     },
     // 获取女优数据

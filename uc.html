@@ -63,7 +63,7 @@
             height: 100%;
             width: 100%;
             z-index: 50;
-            padding: 4px;
+            padding: 8px;
         }
     </style>
 </head>
@@ -167,7 +167,7 @@
                 </dialog>
 
                 <dialog name="play">
-                    <div style="height:calc(100% - 8px);">
+                    <div>
                         <t-card :title="play" :subtitle="women" header-bordered>
                             <template #actions>
                                 <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlay()">
@@ -180,7 +180,7 @@
                                     <t-image :src="img" fit="contain" style="width:100%;height:40vh;" />
                                 </t-swiper-item>
                             </t-swiper>
-                            <t-divider style="margin:16px 0px;"></t-divider>
+                            <t-divider style="margin:8px 0px;"></t-divider>
                             <video controls preload="metadata" :src="video" style="width:100%;"></video>
                             <div style="margin:8px 0 0 0;                            
                             display:grid;

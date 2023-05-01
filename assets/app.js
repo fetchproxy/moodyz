@@ -38,6 +38,7 @@ const app = Vue.reactive({
   sites: [
     { label: "MOODYZ", value: "https://moodyz.com" },
     { label: "S-One", value: "https://s1s1s1.com" },
+    { label: "Premium", value: "https://premium-beauty.com" },
     { label: "OPPAI", value: "https://oppai-av.com" },
     { label: "Rookie", value: "https://rookie-av.jp" },
     { label: "KaWaii", value: "https://kawaiikawaii.jp" },

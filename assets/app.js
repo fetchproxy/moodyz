@@ -126,6 +126,11 @@ const vm = Vue.createApp({
   data() {
     return app;
   },
+  computed: {
+    maxWidth() {
+      return Math.min(screen.width, 500);
+    },
+  },
   methods: {
     // 关闭播放所有视频页面
     closePlayAll() {

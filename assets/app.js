@@ -271,10 +271,10 @@ const vm = Vue.createApp({
     // 关闭播放页面
     closePlay() {
       this.closeDialog("play");
-      app.women = "";
-      app.title = "";
-      app.imgs = [];
-      app.video = "";
+      this.women = "";
+      this.title = "";
+      this.imgs = [];
+      this.video = "";
     },
     // 打开播放页面
     async setPlay(id, women) {
@@ -446,6 +446,14 @@ const vm = Vue.createApp({
           "video": vm.video,
         };
       }
+    },
+    test() {
+      const header = $("header");
+      alert(
+        `header max-width:${
+          getComputedStyle(header, null).getPropertyValue("max-width")
+        }`,
+      );
     },
   },
   watch: {

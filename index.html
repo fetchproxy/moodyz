@@ -107,7 +107,8 @@
                     <div v-for="(card,index) in cards" style="
                     background-color: var(--td-gray-color-6);
                     border-radius: 3px;
-                    width:100%;">
+                    width:100%;
+                    max-height:calc((width - 24px) / 2 * 1.4 + 48px)">
                         <img :index="index" :src="card.img" style="width:100%;
                         background-color: var(--td-gray-color-5);
                         border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.getAttribute('index'))" />
@@ -177,7 +178,7 @@
                             <!-- <p style="font-weight:bold;">{{title}}</p> -->
                             <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}">
                                 <t-swiper-item v-for="img in imgs" :key="img">
-                                    <t-image :src="img" fit="contain" style="width:100%;height:40vh;" />
+                                    <t-image :src="img" fit="contain" style="width:100%;height:35vh;" />
                                 </t-swiper-item>
                             </t-swiper>
                             <t-divider style="margin:8px 0px;"></t-divider>

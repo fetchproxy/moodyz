@@ -130,7 +130,14 @@ const vm = Vue.createApp({
   data() {
     return app;
   },
-  computed: {},
+  computed: {
+    filmCardWidth() {
+      return `${(screen.width - 24) / 2 * 1.4 + 52}px`;
+    },
+    headerWidth() {
+      return `${Math.min(screen.width, 500)}px`;
+    },
+  },
   methods: {
     // 关闭播放所有视频页面
     closePlayAll() {

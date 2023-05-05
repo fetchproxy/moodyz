@@ -2,100 +2,101 @@
 <html lang="zh-Hans">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./favicon.ico" />
+  <title>MS</title>
 
-    <!-- Vue and VueRouter -->
-    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.prod.js"></script>
-    <script src="https://unpkg.com/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
+  <!-- Vue and VueRouter -->
+  <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
 
-    <!-- TDesign -->
-    <link rel="stylesheet" href="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.css" />
-    <script src="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.js"></script>
+  <!-- TDesign -->
+  <link rel="stylesheet" href="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.css" />
+  <script src="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.js"></script>
 
-    <!-- TDesign-icons-vue-next -->
-    <link rel="stylesheet" href="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.css" />
-    <script src="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.js"></script>
+  <!-- TDesign-icons-vue-next -->
+  <link rel="stylesheet" href="https://unpkg.com/tdesign-icons-vue-next@0.1.8/dist/index.min.css" />
+  <script src="https://unpkg.com/tdesign-vue-next@1.3.0/dist/tdesign.min.js"></script>
 
-    <!-- app -->
-    <link rel="stylesheet" href="./assets/app.css" />
+  <!-- app -->
+  <link rel="stylesheet" href="./assets/app.css" />
 
-    <style>
-        .header,
-        .main,
-        .footer {
-            box-sizing: border-box;
-            padding: 8px;
-            /* other */
-            width: 100%;
-            max-width: min(calc(100vw), calc(var(--max-width)));
+  <style>
+    .header,
+    .main,
+    .footer {
+      box-sizing: border-box;
+      padding: 8px;
+      /* other */
+      width: 100%;
+      max-width: min(100vw, var(--max-width));
 
-            /* uc */
-            width: 100%;
-            max-width: 412px;
-        }
+      /* uc */
+      width: 100%;
+      max-width: 412px;
+    }
 
-        .header {
-            display: grid;
-            grid-template-columns: 38% calc(50% - 16px) 12%;
-            gap: 8px;
-        }
+    .header {
+      display: grid;
+      grid-template-columns: 38% calc(50% - 16px) 12%;
+      gap: 8px;
+    }
 
-        .main {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow-y: auto;
-            gap: 8px 8px;
-            background-color: hsl(0, 0%, 50%);
-        }
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow-y: auto;
+      gap: 8px 8px;
+      background-color: hsl(0, 0%, 50%);
+    }
 
-        .main>div {
-            background-color: var(--td-gray-color-6);
-            border-radius: 3px;
-            width: 100%;
-            display: inline-block;
-        }
+    .main>div {
+      background-color: var(--td-gray-color-6);
+      border-radius: 3px;
+      width: 100%;
+      display: inline-block;
+    }
 
-        .footer {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
+    .footer {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
 
-        dialog {
-            background-color: hsl(0, 0%, 30%);
-            border-width: 0px;
-            box-sizing: border-box;
-            height: 100%;
-            width: 100%;
-            z-index: 50;
-            padding: 8px;
-        }
-    </style>
+    dialog {
+      background-color: hsl(0, 0%, 30%);
+      border-width: 0px;
+      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
+      z-index: 50;
+      padding: 8px;
+    }
+  </style>
 </head>
 
 <body>
-    <app>
-        <router-view></router-view>
-    </app>
+  <app>
+    <router-view></router-view>
+  </app>
 
-    <templates>
-        <page id="page-logo">
-            <div class="flex">
-                <t-card style="width:80%;
+  <templates>
+    <page id="page-logo">
+      <div class="flex">
+        <t-card style="width:80%;
                 background-color: hsl(0,0%,40%);
                 color:hsl(0, 0%, 90%)">
-                    <h2>影 音 播 放 小 程 序</h2>
-                    <t-divider></t-divider>
-                    <p>Moodyz、S-One 极简版</p>
-                </t-card>
-            </div>
-        </page>
+          <h2>影 音 播 放 小 程 序</h2>
+          <t-divider></t-divider>
+          <p>Moodyz、S-One 极简版</p>
+        </t-card>
+      </div>
+    </page>
 
-        <page id="page-main" style="background-color: var(--td-gray-color-8);color:var(--td-gray-color-2)">
-            <div style="display:grid;                
+    <page id="page-main" style="background-color: var(--td-gray-color-8);color:var(--td-gray-color-2)">
+      <div style="display:grid;                
                 grid-template-rows:50px 1fr 50px;
                 height:100%;
                 width: min(100vw, var(--max-width));
@@ -103,123 +104,123 @@
                 color:var(--td-gray-color-2);
                 position:relative;">
 
-                <header class="header" :style="{'width':headerWidth}">
-                    <t-select v-model="site" :options="sites" :prefix-icon="siteIcon"></t-select>
-                    <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
-                    <t-button variant="outline" :loading="loading" onclick="vm.test()">
-                        <template #icon><t-icon name="poweroff" /></template>
-                    </t-button>
-                </header>
+        <header class="header" :style="{'width':headerWidth}">
+          <t-select v-model="site" :options="sites" :prefix-icon="siteIcon"></t-select>
+          <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
+          <t-button variant="outline" :loading="loading" onclick="vm.test()">
+            <template #icon><t-icon name="poweroff" /></template>
+          </t-button>
+        </header>
 
-                <main class="main">
-                    <div v-for="(card,index) in cards" :style="{height:filmCardWidth}">
-                        <img :index="index" :src="card.img" style="width:100%;
+        <main class="main">
+          <div v-for="(card,index) in cards" :style="{height:filmCardWidth}">
+            <img :index="index" :src="card.img" style="width:100%;
                         background-color: var(--td-gray-color-5);
                         border-radius: 3px 3px 0px 0px;" onclick="vm.showPic(this.getAttribute('index'))" />
-                        <div style="display:grid;
+            <div style="display:grid;
                         grid-template-columns: 40% 1fr; 
                         gap:10px;
                         padding:8px;">
-                            <t-button variant="outline" :data-women="card['women-name']" style="font-size:12px;"
-                                onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
-                            <t-button variant="outline" :data-women="card.women" style="font-size:12px;"
-                                onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
-                        </div>
-                    </div>
-                </main>
+              <t-button variant="outline" :data-women="card['women-name']" style="font-size:12px;"
+                onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
+              <t-button variant="outline" :data-women="card.women" style="font-size:12px;"
+                onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
+            </div>
+          </div>
+        </main>
 
-                <footer class="footer">
-                    <t-button variant="outline" style="width:100%;font-size:12px;" onclick="vm.openPlayAll()">
-                        <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
-                    <t-button variant="outline" style="width:100%;font-size:12px;">第 {{page}}
-                        页</t-button>
-                    <t-button variant="outline" onclick="vm.previous()" style="width:100%;font-size:12px;">
-                        <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
-                    <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
-                        <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
-                </footer>
+        <footer class="footer">
+          <t-button variant="outline" style="width:100%;font-size:12px;" onclick="vm.openPlayAll()">
+            <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
+          <t-button variant="outline" style="width:100%;font-size:12px;">第 {{page}}
+            页</t-button>
+          <t-button variant="outline" onclick="vm.previous()" style="width:100%;font-size:12px;">
+            <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
+          <t-button variant="outline" onclick="vm.next()" style="width:100%;font-size:12px;">
+            <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
+        </footer>
 
-                <dialog name="showPic" class="showpic">
-                    <t-card title="大图 + 缩放" :subtitle="`${imgIndex+1} / ${imgs.length}`" header-bordered>
-                        <template #actions>
-                            <t-button theme="danger" shape="circle" variant="base" onclick="vm.closeShowPic()">
-                                <template #icon><t-icon name="close" /></template>
-                            </t-button>
-                        </template>
+        <dialog name="showPic" class="showpic">
+          <t-card title="大图 + 缩放" :subtitle="`${imgIndex+1} / ${imgs.length}`" header-bordered>
+            <template #actions>
+              <t-button theme="danger" shape="circle" variant="base" onclick="vm.closeShowPic()">
+                <template #icon><t-icon name="close" /></template>
+              </t-button>
+            </template>
 
-                        <div style="overflow: scroll;
+            <div style="overflow: scroll;
                             object-fit: cover;
                             position: relative;
                             height:65vh;
                             margin-bottom: 8px;">
-                            <img :src="imgs[imgIndex]" style="position:absolute; width:100%;" />
-                        </div>
+              <img :src="imgs[imgIndex]" style="position:absolute; width:100%;" />
+            </div>
 
-                        <div style="display:grid;grid-template-columns: 1fr 1fr;gap:8px;margin-bottom:8px;">
-                            <t-button variant="outline" onclick="vm.preImg()" style="width:100%;font-size:12px;">
-                                <template #icon><t-icon name="chevron-left" /></template>上 一 张</t-button>
-                            <t-button variant="outline" onclick="vm.nextImg()" style="width:100%;font-size:12px;">
-                                <template #suffix><t-icon name="chevron-right" /></template>下 一 张</t-button>
-                        </div>
+            <div style="display:grid;grid-template-columns: 1fr 1fr;gap:8px;margin-bottom:8px;">
+              <t-button variant="outline" onclick="vm.preImg()" style="width:100%;font-size:12px;">
+                <template #icon><t-icon name="chevron-left" /></template>上 一 张</t-button>
+              <t-button variant="outline" onclick="vm.nextImg()" style="width:100%;font-size:12px;">
+                <template #suffix><t-icon name="chevron-right" /></template>下 一 张</t-button>
+            </div>
 
-                        <div style="display:flex;
+            <div style="display:flex;
                             align-items: center;
                             justify-content: center;">
-                            <input type="range" min="100" max="200" step="10" value="100" style="width:100%;"
-                                onchange="vm.scaleImg(this.value)" />
-                        </div>
-                    </t-card>
-                </dialog>
+              <input type="range" min="100" max="200" step="10" value="100" style="width:100%;"
+                onchange="vm.scaleImg(this.value)" />
+            </div>
+          </t-card>
+        </dialog>
 
-                <dialog name="play">
-                    <div>
-                        <t-card :title="play" :subtitle="women" header-bordered>
-                            <template #actions>
-                                <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlay()">
-                                    <template #icon><t-icon name="close" /></template>
-                                </t-button>
-                            </template>
-                            <!-- <p style="font-weight:bold;">{{title}}</p> -->
-                            <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}">
-                                <t-swiper-item v-for="img in imgs" :key="img">
-                                    <t-image :src="img" fit="contain" style="width:100%;height:35vh;" />
-                                </t-swiper-item>
-                            </t-swiper>
-                            <t-divider style="margin:8px 0px;"></t-divider>
-                            <video controls preload="metadata" :src="video" style="width:100%;"></video>
-                            <div style="margin:8px 0 0 0;                            
+        <dialog name="play">
+          <div>
+            <t-card :title="play" :subtitle="women" header-bordered>
+              <template #actions>
+                <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlay()">
+                  <template #icon><t-icon name="close" /></template>
+                </t-button>
+              </template>
+              <!-- <p style="font-weight:bold;">{{title}}</p> -->
+              <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}">
+                <t-swiper-item v-for="img in imgs" :key="img">
+                  <t-image :src="img" fit="contain" style="width:100%;height:35vh;" />
+                </t-swiper-item>
+              </t-swiper>
+              <t-divider style="margin:8px 0px;"></t-divider>
+              <video controls preload="metadata" :src="video" style="width:100%;"></video>
+              <div style="margin:8px 0 0 0;                            
                             display:grid;
                             grid-template-columns: 1fr 1fr 1fr;
                             gap:8px;
                             width:100%">
-                                <t-button variant="outline" style="font-size:12px;">下 载</t-button>
-                                <t-button variant="outline" style="font-size:12px;" onclick="vm.mPlay()">播 放</t-button>
-                                <t-button variant="outline" style="font-size:12px;" onclick="vm.pause()">暂 停</t-button>
-                            </div>
-                        </t-card>
-                    </div>
-                </dialog>
+                <t-button variant="outline" style="font-size:12px;">下 载</t-button>
+                <t-button variant="outline" style="font-size:12px;" onclick="vm.mPlay()">播 放</t-button>
+                <t-button variant="outline" style="font-size:12px;" onclick="vm.pause()">暂 停</t-button>
+              </div>
+            </t-card>
+          </div>
+        </dialog>
 
-                <dialog name="playall">
-                    <t-card :title="`连续播放 ${videos[videoIndex]!=undefined?videos[videoIndex].id:''}`"
-                        :subtitle="`${videoIndex+1} / ${videos.length}`" header-bordered>
-                        <template #actions>
-                            <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlayAll()">
-                                <template #icon><t-icon name="close" /></template>
-                            </t-button>
-                        </template>
-                        <video controls autoplay="true" x5-playsinline webkit-playsinline="true" playsinline="true"
-                            x-webkit-airplay="allow" x5-video-player-type="h5" preload="metadata"
-                            :src="videos[videoIndex]!=undefined?videos[videoIndex].src:''" style="width:100%;"
-                            onended="vm.nextVideo()"></video>
-                    </t-card>
-                </dialog>
-            </div>
-        </page>
-    </templates>
+        <dialog name="playall">
+          <t-card :title="`连续播放 ${videos[videoIndex]!=undefined?videos[videoIndex].id:''}`"
+            :subtitle="`${videoIndex+1} / ${videos.length}`" header-bordered>
+            <template #actions>
+              <t-button theme="danger" shape="circle" variant="base" onclick="vm.closePlayAll()">
+                <template #icon><t-icon name="close" /></template>
+              </t-button>
+            </template>
+            <video controls autoplay="true" x5-playsinline webkit-playsinline="true" playsinline="true"
+              x-webkit-airplay="allow" x5-video-player-type="h5" preload="metadata"
+              :src="videos[videoIndex]!=undefined?videos[videoIndex].src:''" style="width:100%;"
+              onended="vm.nextVideo()"></video>
+          </t-card>
+        </dialog>
+      </div>
+    </page>
+  </templates>
 
-    <script src="./assets/tools.js"></script>
-    <script src="./assets/app.js"></script>
+  <script src="./assets/tools.js"></script>
+  <script src="./assets/app.js"></script>
 </body>
 
 </html>

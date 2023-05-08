@@ -34,16 +34,15 @@
       max-width: min(100vw, var(--max-width));
 
       /* uc */
-      /* width: 100%;
+/*       width: 100%;
       max-width: 412px; */
     }
 
-    /* .header {
+    .header {
       display: grid;
       grid-template-columns: 38% calc(50% - 16px) 12%;
       gap: 8px;
-    } */
-
+    }
 
     .main {
       display: grid;
@@ -96,7 +95,7 @@
       </div>
     </page>
 
-    <page id="page-main">
+    <page id="page-main" style="background-color: var(--td-gray-color-8);color:var(--td-gray-color-2)">
       <div style="display:grid;                
                 grid-template-rows:50px 1fr 50px;
                 height:100%;
@@ -105,32 +104,13 @@
                 color:var(--td-gray-color-2);
                 position:relative;">
 
-        <header style="padding:8px">
-          <t-row :gutter="8" align="middle" style="height:100%;margin:0px;">
-            <t-col :span="5">
-              <t-select v-model="site" :options="sites" :prefix-icon="siteIcon"></t-select>
-            </t-col>
-            <t-col :span="5">
-              <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
-            </t-col>
-            <t-col :span="2">
-              <t-button variant="outline" :loading="loading" onclick="vm.test()">
-                <template #icon><t-icon name="poweroff" /></template>
-              </t-button>
-            </t-col>
-          </t-row>
-        </header>
-
-
-
-
-        <!-- <header class="header" :style="{'width':headerWidth}">
+        <header class="header" :style="{'width':headerWidth}">
           <t-select v-model="site" :options="sites" :prefix-icon="siteIcon"></t-select>
           <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
           <t-button variant="outline" :loading="loading" onclick="vm.test()">
             <template #icon><t-icon name="poweroff" /></template>
           </t-button>
-        </header> -->
+        </header>
 
         <main class="main">
           <div v-for="(card,index) in cards" :style="{height:filmCardWidth}">

@@ -38,8 +38,9 @@ const app = Vue.reactive({
   sites: [
     { label: "MOODYZ", value: "https://moodyz.com" },
     { label: "S-One", value: "https://s1s1s1.com" },
-    { label: "Madonna", value: "https://madonna-av.com" },
     { label: "Premium", value: "https://premium-beauty.com" },
+    { label: "E-Body", value: "https://www.av-e-body.com" },
+    { label: "Madonna", value: "https://madonna-av.com" },
     { label: "OPPAI", value: "https://oppai-av.com" },
     { label: "Rookie", value: "https://rookie-av.jp" },
     { label: "KaWaii", value: "https://kawaiikawaii.jp" },
@@ -320,6 +321,10 @@ const vm = Vue.createApp({
         await getHTML(url, true, 20),
       );
       const lists = $$("div.c-card", dom);
+      if (lists.length == 0) {
+        vm.cards = cards;
+        return;
+      }
       lists.forEach((card) => {
         try {
           const a = $("a.img.hover", card);
@@ -369,6 +374,10 @@ const vm = Vue.createApp({
         await getHTML(url, true, 20),
       );
       const lists = $$("div.swiper-slide.c-low--6>a.item", dom);
+      if (lists.length == 0) {
+        vm.cards = cards;
+        return;
+      }
       lists.forEach((card) => {
         const strs = card.href.split("/");
         const idStr = strs[strs.length - 1].split("?");

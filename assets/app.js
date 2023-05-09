@@ -40,6 +40,7 @@ const app = Vue.reactive({
     { label: "S-One", value: "https://s1s1s1.com" },
     { label: "Premium", value: "https://premium-beauty.com" },
     { label: "E-Body", value: "https://www.av-e-body.com" },
+    { label: "IDEA-Pocket", value: "https://www.ideapocket.com" },
     { label: "Madonna", value: "https://madonna-av.com" },
     { label: "OPPAI", value: "https://oppai-av.com" },
     { label: "Rookie", value: "https://rookie-av.jp" },
@@ -318,7 +319,7 @@ const vm = Vue.createApp({
       }
       // 爬虫
       const dom = DOM(
-        await getHTML(url, true, 20),
+        await getHTML(url, true, 10),
       );
       const lists = $$("div.c-card", dom);
       if (lists.length == 0) {
@@ -371,7 +372,7 @@ const vm = Vue.createApp({
       }
       //
       const dom = DOM(
-        await getHTML(url, true, 20),
+        await getHTML(url, true, 10),
       );
       const lists = $$("div.swiper-slide.c-low--6>a.item", dom);
       if (lists.length == 0) {

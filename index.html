@@ -123,9 +123,9 @@
                         grid-template-columns: 40% 1fr; 
                         gap:10px;
                         padding:8px;">
-              <t-button variant="outline" :data-women="card['women-name']" style="font-size:12px;"
+              <t-button variant="outline" :data-women="card['women-name']"
                 onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
-              <t-button variant="outline" :data-women="card.women" style="font-size:12px;"
+              <t-button variant="outline" :data-women="card.women"
                 onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
             </div>
           </div>

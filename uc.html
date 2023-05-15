@@ -91,7 +91,7 @@
                 color:hsl(0, 0%, 90%)">
           <h2>影 音 播 放 小 程 序</h2>
           <t-divider></t-divider>
-          <p>Moodyz、S-One 极简版</p>
+          <p>FANZA 系 列 极 简 版</p>
         </t-card>
       </div>
     </page>
@@ -123,7 +123,7 @@
                         grid-template-columns: 40% 1fr; 
                         gap:10px;
                         padding:8px;">
-              <t-button variant="outline" :data-women="card['women-name']"
+              <t-button variant="outline" :data-women="card['women-name']" style="font-size: 12px;"
                 onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
               <t-button variant="outline" :data-women="card.women"
                 onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
@@ -133,13 +133,19 @@
 
         <footer class="footer">
           <t-button variant="outline" style="width:100%;" onclick="vm.openPlayAll()">
-            <template #icon><t-icon name="play-circle" /></template>播放 </t-button>
-          <t-button variant="outline" style="width:100%;">第 {{page}}
-            页</t-button>
+            <template #icon><t-icon name="play-circle" /></template>
+          </t-button>
+          <t-button variant="outline" style="width:100%;">
+            <template #icon><t-icon name="secured" /></template>
+            {{page}}
+          </t-button>
           <t-button variant="outline" onclick="vm.previous()" style="width:100%;">
-            <template #icon><t-icon name="chevron-left" /></template>上一页</t-button>
+            <template #icon><t-icon name="chevron-left" /></template>
+          </t-button>
           <t-button variant="outline" onclick="vm.next()" style="width:100%;">
-            <template #suffix><t-icon name="chevron-right" /></template>下一页</t-button>
+            <template #icon><t-icon name="chevron-right" /></template>
+            <!-- <template #suffix><t-icon name="chevron-right" /></template> -->
+          </t-button>
         </footer>
 
         <dialog name="showPic" class="showpic">

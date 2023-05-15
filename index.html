@@ -33,21 +33,17 @@
       width: 100%;
       max-width: min(100vw, var(--max-width));
 
-      /* uc */
-      /* width: 100%;
-      max-width: 412px; */
+      /* UC */
+      /* max-width: 412px; */
     }
 
-    /* .header {
-      display: grid;
-      grid-template-columns: 38% calc(50% - 16px) 12%;
-      gap: 8px;
-    } */
+    video {
+      background-color: black;
+    }
 
     .main {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      /* grid-auto-rows: calc(388px / 2 * 1.4 + 50px); */
       overflow-y: auto;
       gap: 8px 8px;
       background-color: hsl(0, 0%, 50%);
@@ -120,13 +116,6 @@
                 </t-button>
               </t-col>
             </t-row>
-
-
-            <!-- <t-select v-model="site" :options="sites" :prefix-icon="siteIcon"></t-select>
-            <t-select v-model="path" :options="paths" :prefix-icon="pathIcon"></t-select>
-            <t-button variant="outline" :loading="loading" onclick="vm.test()">
-              <template #icon><t-icon name="poweroff" /></template>
-            </t-button> -->
         </header>
 
         <main class="main">

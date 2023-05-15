@@ -40,7 +40,7 @@ const app = Vue.reactive({
     { label: "S-One", value: "https://s1s1s1.com" },
     { label: "Premium", value: "https://premium-beauty.com" },
     { label: "E-Body", value: "https://www.av-e-body.com" },
-    { label: "IDEA-Pocket", value: "https://www.ideapocket.com" },
+    { label: "IDEAPocket", value: "https://www.ideapocket.com" },
     { label: "Madonna", value: "https://madonna-av.com" },
     { label: "OPPAI", value: "https://oppai-av.com" },
     { label: "Rookie", value: "https://rookie-av.jp" },

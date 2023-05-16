@@ -29,10 +29,9 @@
     .footer {
       box-sizing: border-box;
       padding: 8px;
-      /* other */
       width: 100%;
       max-width: min(100vw, var(--max-width));
-      
+
       /* UC */
       max-width: 412px;
     }
@@ -71,7 +70,7 @@
 </head>
 
 <body>
-  <app>
+  <app style="flex:1 auto">
     <router-view></router-view>
   </app>
 
@@ -112,6 +111,7 @@
                 </t-button>
               </t-col>
             </t-row>
+          </t-space>
         </header>
 
         <main class="main">
@@ -196,7 +196,7 @@
                 </t-swiper-item>
               </t-swiper>
               <t-divider style="margin:8px 0px;"></t-divider>
-              <video controls preload="metadata" :src="video" style="width:100%;background-color: black;"></video>
+              <video controls preload="metadata" :src="video" style="width:100%;"></video>
               <div style="margin:8px 0 0 0;                            
                             display:grid;
                             grid-template-columns: 1fr 1fr 1fr;

@@ -124,8 +124,8 @@
                         grid-template-columns: 40% 1fr; 
                         gap:10px;
                         padding:8px;">
-              <t-button variant="outline" :data-women="card['women-name']" style="font-size: 12px;"
-                onclick="vm.setPlay(this.textContent,this.dataset.women)">{{card.id}}</t-button>
+              <t-button variant="outline" :data-index="index" :data-women="card['women-name']" style="font-size: 12px;"
+                onclick="vm.setPlay(this.textContent,this.dataset.women,this.dataset.index)">{{card.id}}</t-button>
               <t-button variant="outline" :data-women="card.women"
                 onclick="vm.setWomen(this.dataset.women,this.textContent)">{{card["women-name"]}}</t-button>
             </div>
@@ -190,7 +190,7 @@
                 </t-button>
               </template>
               <!-- <p style="font-weight:bold;">{{title}}</p> -->
-              <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}">
+              <t-swiper :duration="300" :autoplay="false" :navigation="{size:'large'}" :current="0">
                 <t-swiper-item v-for="img in imgs" :key="img">
                   <t-image :src="img" fit="contain" style="width:100%;height:35vh;" />
                 </t-swiper-item>

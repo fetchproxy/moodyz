@@ -468,6 +468,12 @@ const vm = Vue.createApp({
     },
     //打开对话框
     openDialog(name = "") {
+      if (window.history) {
+        window.history.pushState({}, null, "");
+        window.onpopstate = () => {
+          vm.closeDialog(name);
+        };
+      }
       const dialog = $(`dialog[name='${name}']`);
       dialog.open = true;
     },
@@ -475,6 +481,7 @@ const vm = Vue.createApp({
     closeDialog(name = "") {
       const dialog = $(`dialog[name='${name}']`);
       dialog.open = false;
+      window.onpopstate = null;
     },
     //缩放图片
     scaleImg(value = 1) {
@@ -512,13 +519,10 @@ const vm = Vue.createApp({
       if (this.caches.films[url]) {
         const film = vm.caches.films[url];
         vm.imgs = vm.imgs.concat(film.imgs);
-        // film.imgs.forEach((img) => {
-        //   vm.imgs.push(img);
-        // });
         return;
       }
       // 爬虫
-      await this.getPlay(url);
+      await this.getPlay(url, index);
     },
     // 关闭缩放图片页面
     closeShowPic() {
@@ -570,12 +574,12 @@ const vm = Vue.createApp({
       this.video = "";
     },
     // 打开播放页面
-    async setPlay(id, women) {
+    async setPlay(id, women, index = 0) {
       app.women = women;
       if (id) {
         app.play = id;
         this.openDialog("play");
-        await vm.getPlay(`${app.site}/works/detail/${app.play}`);
+        await vm.getPlay(`${app.site}/works/detail/${app.play}`, index);
       }
     },
     // 设置女优路径信息

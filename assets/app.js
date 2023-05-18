@@ -45,6 +45,8 @@ const app = Vue.reactive({
     { label: "Madonna", value: "https://madonna-av.com" },
     { label: "OPPAI", value: "https://oppai-av.com" },
     { label: "Rookie", value: "https://rookie-av.jp" },
+    { label: "Das", value: "https://dasdas.jp" },
+    { label: "Tameikegoro", value: "https://tameikegoro.jp" },
     { label: "KaWaii", value: "https://kawaiikawaii.jp" },
   ],
   // 当前路径

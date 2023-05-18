@@ -511,9 +511,10 @@ const vm = Vue.createApp({
       // 缓存
       if (this.caches.films[url]) {
         const film = vm.caches.films[url];
-        film.imgs.forEach((img) => {
-          vm.imgs.push(img);
-        });
+        vm.imgs = vm.imgs.concat(film.imgs);
+        // film.imgs.forEach((img) => {
+        //   vm.imgs.push(img);
+        // });
         return;
       }
       // 爬虫
@@ -528,6 +529,8 @@ const vm = Vue.createApp({
       img.style.width = "100%";
       vm.showImg = "";
       range.value = 100;
+      vm.imgs = [];
+      vm.video = "";
     },
     // 播放视频按钮
     mPlay() {
@@ -709,11 +712,16 @@ const vm = Vue.createApp({
       }
     },
     // 获取视频信息
-    async getPlay(url = "") {
+    async getPlay(url = "", index = 0) {
+      vm.showImg = this.cards[index].img;
+      vm.imgs = [];
+      vm.imgIndex = 0;
+      vm.imgs.push(vm.showImg);
       //
       if (app.caches.films[url]) {
         const film = app.caches.films[url];
-        vm.imgs = film.imgs;
+        vm.imgs = vm.imgs.concat(film.imgs);
+        // vm.imgs = film.imgs;
         vm.video = film.video;
         vm.title = film.title;
         return;
@@ -735,7 +743,7 @@ const vm = Vue.createApp({
       } else {
         vm.video = video.src;
       }
-      vm.imgs = imgs;
+      vm.imgs = vm.imgs.concat(imgs);
       vm.title = title.textContent;
       if (imgs.length > 0) {
         this.caches.films[url] = {

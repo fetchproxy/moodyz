@@ -445,7 +445,7 @@ const vm = Vue.createApp({
         }
         //
         const dom = DOM(
-          await getHTML(url, true, 20),
+          await getHTML(url, true, 10),
         );
         const video = $("video", dom);
         if (video == undefined) {
@@ -471,7 +471,20 @@ const vm = Vue.createApp({
       if (window.history) {
         window.history.pushState({}, null, "");
         window.onpopstate = () => {
-          vm.closeDialog(name);
+          switch (name) {
+            case "playall":
+              vm.closePlayAll();
+              break;
+            case "showPic":
+              vm.closeShowPic();
+              break;
+            case "play":
+              vm.closePlay();
+              break;
+            default:
+              vm.closeDialog(name);
+              break;
+          }
         };
       }
       const dialog = $(`dialog[name='${name}']`);
@@ -531,8 +544,8 @@ const vm = Vue.createApp({
       const range = $("input", ele);
       const img = $("img", ele);
       img.style.width = "100%";
-      vm.showImg = "";
       range.value = 100;
+      vm.showImg = "";
       vm.imgs = [];
       vm.video = "";
     },

@@ -33,15 +33,15 @@ const router = VueRouter.createRouter({
 
 const app = Vue.reactive({
   // 当前站点
-  site: "https://moodyz.com",
+  site: "https://kawaiikawaii.jp",
   // 全部站点选项
   sites: [
     { label: "MOODYZ", value: "https://moodyz.com" },
     { label: "S-One", value: "https://s1s1s1.com" },
     { label: "Premium", value: "https://premium-beauty.com" },
     { label: "Attackers", value: "https://attackers.net" },
-    { label: "E-Body", value: "https://www.av-e-body.com" },
-    { label: "IDEA-Pocket", value: "https://www.ideapocket.com" },
+    { label: "E-Body", value: "https://av-e-body.com" },
+    { label: "IDEA-Pocket", value: "https://ideapocket.com" },
     { label: "Madonna", value: "https://madonna-av.com" },
     { label: "OPPAI", value: "https://oppai-av.com" },
     { label: "Rookie", value: "https://rookie-av.jp" },

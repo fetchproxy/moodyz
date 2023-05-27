@@ -37,17 +37,36 @@ const app = Vue.reactive({
   // 全部站点选项
   sites: [
     { label: "MOODYZ", value: "https://moodyz.com" },
-    { label: "S-One", value: "https://s1s1s1.com" },
-    { label: "Premium", value: "https://premium-beauty.com" },
-    { label: "Attackers", value: "https://attackers.net" },
-    { label: "E-Body", value: "https://av-e-body.com" },
+    { label: "WANZ", value: "https://wanz-factory.com" },
+    { label: "S1-Style", value: "https://s1s1s1.com" },
     { label: "IDEA-Pocket", value: "https://ideapocket.com" },
-    { label: "Madonna", value: "https://madonna-av.com" },
-    { label: "OPPAI", value: "https://oppai-av.com" },
-    { label: "Rookie", value: "https://rookie-av.jp" },
+    { label: "MUTEKI", value: "https://mutekimuteki.com" },
+    { label: "Kira*", value: "https://kirakira-av.com" },
+    { label: "E-BODY", value: "https://av-e-body.com" },
+    { label: "痴女ヘブン", value: "https://bi-av.com" },
+    { label: "Premium", value: "https://premium-beauty.com" },
+    { label: "未満", value: "https://miman.jp" },
+    { label: "人妻-熟女", value: "https://madonna-av.com" },
+    { label: "溜池", value: "https://tameikegoro.jp" },
+    { label: "Fitch", value: "https://fitch-av.com" },
+    { label: "Kawaii*", value: "https://kawaiikawaii.jp" },
+    { label: "BeFree", value: "https://befreebe.com" },
+    { label: "無垢", value: "https://muku.tv" },
+    { label: "ATTACKERS", value: "https://attackers.net" },
     { label: "Das", value: "https://dasdas.jp" },
-    { label: "Tameikegoro", value: "https://tameikegoro.jp" },
-    { label: "KaWaii", value: "https://kawaiikawaii.jp" },
+    { label: "MkoLabo", value: "https://mko-labo.net" },
+    { label: "MVG", value: "https://mvg.jp" },
+    { label: "OPERA", value: "https://av-opera.jp" },
+    { label: "OPPAI", value: "https://oppai-av.com" },
+    { label: "V-AV", value: "https://v-av.com" },
+    { label: "变态绅士", value: "https://to-satsu.com" },
+    { label: "妄想族", value: "https://mousouzoku-av.com" },
+    { label: "BiBian", value: "https://bibian-av.com" },
+    { label: "本中", value: "https://honnaka.jp" },
+    { label: "Rookie", value: "https://rookie-av.jp" },
+    { label: "素人搭讪", value: "https://nanpa-japan.jp" },
+    { label: "街角素人", value: "https://hajimekikaku.com" },
+    { label: "Hunter", value: "https://hhh-av.com" },
   ],
   // 当前路径
   path: "/top",
@@ -775,7 +794,7 @@ const vm = Vue.createApp({
     test() {
       const header = $("header");
       alert(
-        `header max-width:${
+        `header max-width : ${
           getComputedStyle(header, null).getPropertyValue("max-width")
         }`,
       );

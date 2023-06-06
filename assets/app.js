@@ -86,6 +86,30 @@ const app = Vue.reactive({
       "number": 1581,
     },
     {
+      "label": "OL",
+      "jp": "OL",
+      "value": "/works/list/genre/356",
+      "number": 185,
+    },
+    {
+      "label": "SM",
+      "jp": "SM",
+      "value": "/works/list/genre/110",
+      "number": 275,
+    },
+    {
+      "label": "凌辱",
+      "jp": "凌辱",
+      "value": "/works/list/genre/132",
+      "number": 1412,
+    },
+    {
+      "label": "強姦",
+      "jp": "レイプ・強姦",
+      "value": "/works/list/genre/5033",
+      "number": 32,
+    },
+    {
       "label": "美少女",
       "jp": "美少女",
       "value": "/works/list/genre/330",
@@ -360,12 +384,6 @@ const app = Vue.reactive({
       "jp": "マッサージ・リフレ",
       "value": "/works/list/genre/457",
       "number": 92,
-    },
-    {
-      "label": "OL",
-      "jp": "OL",
-      "value": "/works/list/genre/356",
-      "number": 88,
     },
     {
       "label": "芸能人",

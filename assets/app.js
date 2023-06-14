@@ -606,7 +606,7 @@ const vm = Vue.createApp({
     },
     // 下一页
     next() {
-      if (vm.path == "/top") return;
+      if (vm.path == "/top" || vm.cards.length < 30) return;
       vm.page++;
     },
     // 获取当前地址
